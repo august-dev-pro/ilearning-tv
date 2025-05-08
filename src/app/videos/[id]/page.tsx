@@ -1,9 +1,12 @@
 import VideoCard from "@/components/videos/VideoCard2";
 import { Video, videos } from "@/lib/api/videosData";
 
-export default async function VideoPageById({ params }: any) {
+export default async function VideoPageById({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
-  console.log(params);
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
