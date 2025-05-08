@@ -1,13 +1,9 @@
 import VideoCard from "@/components/videos/VideoCard2";
 import { Video, videos } from "@/lib/api/videosData";
 
-interface Props {
-  params: { id: string };
-}
-
-export default async function VideoPageById({ params }: Props) {
+export default async function VideoPageById({ params }: any) {
   const { id } = await params;
-  console.log(id);
+  console.log(params);
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
