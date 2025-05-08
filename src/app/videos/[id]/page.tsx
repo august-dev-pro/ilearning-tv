@@ -4,12 +4,13 @@ type PageProps = {
   params: { id: string };
 };
 
-export default function VideoPageById({ params }: PageProps) {
+export default async function VideoPageById({ params }: PageProps) {
+  const { id } = params;
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
       <main className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Vidéo + description */}
-        <div id={params.id} className="lg:col-span-2">
+        <div id={id} className="lg:col-span-2">
           {/* Player */}
           <div className="aspect-video bg-black rounded-xl overflow-hidden shadow-lg">
             <iframe
