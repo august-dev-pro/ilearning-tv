@@ -9,7 +9,7 @@ export default function VideoPageById({ params }: PageProps) {
     <div className="min-h-screen bg-gray-100 text-gray-800">
       <main className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Vidéo + description */}
-        <div className="lg:col-span-2">
+        <div id={params.id} className="lg:col-span-2">
           {/* Player */}
           <div className="aspect-video bg-black rounded-xl overflow-hidden shadow-lg">
             <iframe
