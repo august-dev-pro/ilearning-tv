@@ -234,9 +234,11 @@ export default function Header() {
                       <button
                         className="flex items-center gap-2 text-left w-full group"
                         onClick={() => {
-                          link.isSubMenu
-                            ? setIsSubMenuOpen(!isSubMenuOpen)
-                            : setIsMenuOpen(false);
+                          if (link.isSubMenu) {
+                            setIsSubMenuOpen(!isSubMenuOpen);
+                          } else {
+                            setIsMenuOpen(false);
+                          }
                         }}
                       >
                         {link.icon}

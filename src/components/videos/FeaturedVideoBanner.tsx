@@ -1,9 +1,6 @@
-// components/videos/FeaturedVideoBanner.tsx
 import React from "react";
-import { Input } from "../ui/input";
 import PlayButton from "../ui/PlayButton";
 import { BiStar } from "react-icons/bi";
-// import { Play } from "lucide-react";
 
 type FeaturedVideoBannerProps = {
   title: string;

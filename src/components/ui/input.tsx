@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils/uitils";
 import * as React from "react";
 import { BiSearch } from "react-icons/bi";
-import { CgSearch } from "react-icons/cg";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

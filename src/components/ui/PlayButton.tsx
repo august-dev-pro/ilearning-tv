@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils/uitils";
 import React from "react";
-import { CgPlayButton, CgPlayPause } from "react-icons/cg";
+import { CgPlayButton } from "react-icons/cg";
 
 interface PlayButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}

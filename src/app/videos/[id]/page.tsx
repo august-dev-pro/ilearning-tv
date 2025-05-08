@@ -1,10 +1,10 @@
 import VideoCard from "@/components/videos/VideoCard2";
 import { Video, videos } from "@/lib/api/videosData";
-import { Params } from "next/dist/server/request/params";
+type PageProps = {
+  params: { id: string };
+};
 
-export default function VideoPageById({ id }: { id: Params }) {
-  console.log(id);
-
+export default function VideoPageById({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
       <main className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">

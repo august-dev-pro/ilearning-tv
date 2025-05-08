@@ -5,50 +5,8 @@ import { Video, videos } from "@/lib/api/videosData";
 import banner from "../../public/images/banner.jpg";
 import { useState } from "react";
 import ShowMore from "@/components/ui/ShowMore";
-import Link from "next/link";
-import { BiChevronRight } from "react-icons/bi";
-import { Card } from "@/components/ui/card";
 import { FcAssistant, FcBullish, FcBusinessman, FcIdea } from "react-icons/fc";
 import SectionHeader from "@/components/ui/SectionHeader";
-
-/* const categories = [
-  {
-    name: "Programmation",
-    icon: "🖥️",
-    color: "bg-blue-100 text-blue-800",
-    slug: "programmation",
-  },
-  {
-    name: "Business",
-    icon: "💼",
-    color: "bg-gray-100 text-gray-800",
-    slug: "business",
-  },
-  {
-    name: "Design",
-    icon: "🎨",
-    color: "bg-yellow-100 text-yellow-800",
-    slug: "design",
-  },
-  {
-    name: "Marketing",
-    icon: "📈",
-    color: "bg-red-100 text-red-800",
-    slug: "marketing",
-  },
-  {
-    name: "Finance",
-    icon: "💰",
-    color: "bg-green-100 text-green-800",
-    slug: "finance",
-  },
-  {
-    name: "Santé",
-    icon: "🏥",
-    color: "bg-pink-100 text-pink-800",
-    slug: "sante",
-  },
-]; */
 
 const categories = [
   { name: "Programmation", icon: <FcIdea />, color: "bg-blue-50" },
@@ -56,16 +14,15 @@ const categories = [
   { name: "Design", icon: <FcAssistant />, color: "bg-orange-50" },
   { name: "Marketing", icon: <FcBullish />, color: "bg-red-50" },
 ];
-const channels = [
+/* const channels = [
   { name: "CodeMaster", avatar: "/avatars/code.png", subscribers: "52K" },
   { name: "UX Studio", avatar: "/avatars/design.png", subscribers: "34K" },
-];
+]; */
 export default function Home() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleToggle = () => {
     setIsExpanded((prev) => !prev);
-    // Ici tu peux aussi déclencher d'autres actions si besoin (genre dispatch redux)
   };
 
   const videosToShow = isExpanded ? videos.slice(0, 9) : videos.slice(0, 6); // exemple simple
