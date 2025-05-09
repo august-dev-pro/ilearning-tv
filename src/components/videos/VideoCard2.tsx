@@ -6,7 +6,7 @@ import teacherImage from "../../../public/images/stephan-wahl.jpeg";
 import Image from "next/image";
 import Link from "next/link";
 import PlayButton from "../ui/PlayButton";
-import { MdWifiTethering } from "react-icons/md";
+import { MdWhatshot, MdWifiTethering } from "react-icons/md";
 
 type VideoCardProps = {
   key: string;
@@ -27,14 +27,14 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
   return (
     <article
       className={`bg-white cursor-pointer   transition duration-300 ${
-        isTrend || isLive ? "flex gap-4 items-center" : ""
+        isTrend || isLive ? "flex sm:gap-4 items-center" : ""
       }`}
     >
       {/* Thumbnail */}
       <div
-        className={`relative h-[120px] md:h-[210px] group rounded-xl overflow-hidden transition-all duration-300 border-2 border-transparent hover:border-red-600 ${
+        className={`relative  md:h-[210px] group rounded-xl overflow-hidden transition-all duration-300 border-2 border-transparent hover:border-red-600 ${
           isTrend || isLive
-            ? "h-[120px] w-1/2 sm:w-1/3 max-h-[105px] md:max-h-40"
+            ? "h-[115px] w-1/2 sm:w-1/3 max-h-[90px] sm:max-h-[100px] md:max-h-40"
             : "h-[200px]"
         }`}
       >
@@ -45,7 +45,7 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
                 ? `live/${video.id}`
                 : `http://localhost:3000/videos/${video.id}`
             }`}
-            className="hidden group-hover:sm:flex transition-all"
+            className=" transition-all"
           >
             <PlayButton className="absolute right-[40%] top-[40%]" />
           </Link>
@@ -69,27 +69,41 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
           />
         </Link>
 
-        {/* LIVE Badge */}
-        {isLive && (
-          <span className="absolute flex items-center gap-1 top-2 left-2 bg-red-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full">
-            <MdWifiTethering /> EN DIRECT
+        {/* LIVE or TREND Badge */}
+        {(isLive || isTrend) && (
+          <span className="absolute flex items-center gap-1 top-2 left-2 bg-red-600 text-white text-[9px] sm:text-xs font-medium sm:font-bold px-2 py-1 rounded-full">
+            {isLive ? <MdWifiTethering /> : <MdWhatshot />}
+            {isLive ? <span>EN DIRECT</span> : <span>En Tendance</span>}
           </span>
         )}
 
+        {isNormal && (
+          <div className="absolute z-[100] top-[80%] right-2 flex items-center gap-1 bg-black/70 text-white text-xs sm:text-sm font-medium px-2 py-[3px] rounded-md shadow-md">
+            <span>21:37</span>
+          </div>
+        )}
         {/* Teacher Image (Avatar) */}
-        {video.teacherImage && (
-          <Image
-            src={/* video.teacherImage || */ teacherImage.src}
-            width={500}
-            height={500}
-            alt="teacher"
-            className="absolute bottom-2 right-2 w-8 h-8 rounded-full border-2 border-white"
-          />
+        {(isTrend || isLive) && video.teacherImage && (
+          <div className="absolute bottom-2 right-2 flex items-center gap-1">
+            <span className="text-xs text-white font-bold text-shadow">
+              {video.userName}
+            </span>
+
+            <Image
+              src={/* video.teacherImage || */ teacherImage.src}
+              width={500}
+              height={500}
+              alt="teacher"
+              className=" w-8 h-8 rounded-full border-2 border-white"
+            />
+          </div>
         )}
       </div>
 
       {/* Content */}
-      <div className={`p-3 ${isTrend || isLive ? "w-1/2 sm:w-2/3" : ""}`}>
+      <div
+        className={`p-3 ${isTrend || isLive ? "w-1/2 sm:w-2/3" : ""} space-y-2`}
+      >
         <Link
           href={`${
             isLive
@@ -97,32 +111,52 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
               : `http://localhost:3000/videos/${video.id}`
           }`}
         >
-          <h4 className="text-base sm:text-xl font-[900] text-gray-800 mb-1">
+          <h4
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+            className="text-[13px] sm:text-xl font-[900] text-gray-800 mb-1"
+          >
             {video.title}
           </h4>
         </Link>
-
-        <p className="text-xs text-gray-500 mb-1">{video.userName}</p>
-        {isNormal && (
-          <div className="flex items-center text-[11px] text-gray-400 mb-2 space-x-2">
-            <span>{video.views} vues</span>
-            <span>·</span>
-            <span>{video.publishedAt}</span>
-          </div>
+        {(isTrend || isLive) && (
+          <p className=" hidden sm:flex text-xs text-gray-600">
+            {truncatedDescription}
+          </p>
         )}
+        <div className="flex flex-wrap gap-1 sm:gap-4 items-center">
+          <div className="flex items-center gap-2">
+            {isNormal && video.teacherImage && (
+              <Image
+                src={/* video.teacherImage || */ teacherImage.src}
+                width={500}
+                height={500}
+                alt="teacher"
+                className=" w-8 h-8 rounded-full border-2 border-white"
+              />
+            )}
 
-        {isTrend ||
-          (isLive && (
-            <p className=" hidden sm:flex text-xs text-gray-600">
-              {truncatedDescription}
-            </p>
-          ))}
-        {isTrend ||
-          (isLive && (
-            <span className="flex items-center gap-1 text-sm text-gray-600 font-bold mt-1">
+            <p className="text-xs text-gray-500 ">{video.userName}</p>
+          </div>
+
+          {(isNormal || isTrend) && (
+            <div className="flex items-center text-[11px] text-gray-400 space-x-2">
+              <span>{video.views} vues</span>
+              <span>·</span>
+              <span>il y a {video.publishedAt}</span>
+            </div>
+          )}
+
+          {isLive && (
+            <span className="hidden smflex items-center gap-1 text-[13px] sm:text-sm text-gray-600 font-bold">
               <MdWifiTethering /> En Directe
             </span>
-          ))}
+          )}
+        </div>
       </div>
     </article>
   );
