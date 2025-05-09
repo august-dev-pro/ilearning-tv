@@ -128,7 +128,7 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
             {truncatedDescription}
           </p>
         )}
-        <div className="flex flex-wrap gap-1 sm:gap-5 items-center">
+        <div className="flex flex-wrap gap-[6px] sm:gap-5 items-center">
           {isNormal && video.teacherImage ? (
             <div className="flex items-center gap-2">
               <Image
