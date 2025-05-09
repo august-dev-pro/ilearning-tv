@@ -71,7 +71,7 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
 
         {/* LIVE or TREND Badge */}
         {(isLive || isTrend) && (
-          <span className="absolute flex items-center gap-1 top-2 left-2 bg-red-600 text-white text-[9px] sm:text-xs font-medium sm:font-bold px-2 py-1 rounded-full">
+          <span className="absolute flex items-center gap-1 top-2 left-2 bg-red-600 text-white text-[9px] sm:text-xs font-medium sm:font-bold px-[6px] py-[3px] rounded-full">
             {isLive ? <MdWifiTethering /> : <MdWhatshot />}
             {isLive ? <span>EN DIRECT</span> : <span>En Tendance</span>}
           </span>
@@ -85,7 +85,7 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
         {/* Teacher Image (Avatar) */}
         {(isTrend || isLive) && video.teacherImage && (
           <div className="absolute bottom-2 right-2 flex items-center gap-1">
-            <span className="text-xs text-white font-bold text-shadow">
+            <span className="text-[10px] font-[400] sm:text-xs text-white sm:font-bold text-shadow">
               {video.userName}
             </span>
 
@@ -128,9 +128,9 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
             {truncatedDescription}
           </p>
         )}
-        <div className="flex flex-wrap gap-1 sm:gap-4 items-center">
-          <div className="flex items-center gap-2">
-            {isNormal && video.teacherImage && (
+        <div className="flex flex-wrap gap-1 sm:gap-5 items-center">
+          {isNormal && video.teacherImage ? (
+            <div className="flex items-center gap-2">
               <Image
                 src={/* video.teacherImage || */ teacherImage.src}
                 width={500}
@@ -138,21 +138,24 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
                 alt="teacher"
                 className=" w-8 h-8 rounded-full border-2 border-white"
               />
-            )}
-
+              <p className="text-xs text-gray-500 ">{video.userName}</p>
+            </div>
+          ) : isLive ? (
+            <p className="text-xs text-gray-500 ">14k spectateurs</p>
+          ) : (
             <p className="text-xs text-gray-500 ">{video.userName}</p>
-          </div>
+          )}
 
           {(isNormal || isTrend) && (
             <div className="flex items-center text-[11px] text-gray-400 space-x-2">
-              <span>{video.views} vues</span>
+              <span>{video.views}k vues</span>
               <span>·</span>
               <span>il y a {video.publishedAt}</span>
             </div>
           )}
 
           {isLive && (
-            <span className="hidden smflex items-center gap-1 text-[13px] sm:text-sm text-gray-600 font-bold">
+            <span className="hidden sm:flex items-center gap-1 text-[13px] sm:text-sm text-gray-600 font-bold">
               <MdWifiTethering /> En Directe
             </span>
           )}
