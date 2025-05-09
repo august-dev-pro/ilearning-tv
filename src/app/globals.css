@@ -44,9 +44,8 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-input,
-textarea,
-select {
+form input,
+form textarea {
   @apply w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm
          focus:outline-none focus:ring-2 focus:ring-[#0a1b3b] focus:border-transparent
          transition duration-300;
