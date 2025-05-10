@@ -10,7 +10,7 @@ export default function SearchModal({
   setIsSearchModalOpen,
 }: {
   isSearchModalOpen: boolean;
-  setIsSearchModalOpen: Function;
+  setIsSearchModalOpen: (open: boolean) => void;
 }) {
   const [searchQuery, setSearchQuery] = useState("");
 
