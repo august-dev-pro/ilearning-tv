@@ -101,6 +101,24 @@ form .textarea {
   scrollbar-width: none;
 }
 
+.custom-scroll {
+  padding-right: 8px;
+  scrollbar-width: thin;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #006aff; /* slate-400 */
+  border-radius: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #006aff; /* slate-500 */
+}
+
 @screen sm {
 }
 

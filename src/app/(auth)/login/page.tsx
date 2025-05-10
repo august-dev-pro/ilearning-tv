@@ -5,14 +5,14 @@ import React from "react";
 const LoginPage = () => {
   return (
     <div>
-      <div className="py-10 flex items-center">
+      <div className="flex items-center">
         <div className="container px-4 sm:px-0 grid items-center justify-center gap-6 md:gap-10">
-          <div className="max-w-md m-[0_auto] w-full  bg-white border border-gray-200 md:border-gray-100 rounded-2xl shadow-lg p-5 sm:p-8 space-y-6">
+          <div className="max-w-md xl:min-w-md m-[0_auto] w-full  bg-white border border-gray-200 md:border-gray-100 rounded-2xl shadow-lg p-5 sm:p-8 space-y-6">
             <h1
               className="mb-6 text-xl
 md:text-2xl  font-[900] text-black text-center border-gray-300 border-b pb-4"
             >
-              Connectez-vous à votre compte
+              Connectez-vous
             </h1>
             <form className="space-y-5 ">
               <div>
@@ -57,7 +57,7 @@ md:text-2xl  font-[900] text-black text-center border-gray-300 border-b pb-4"
 
               <button
                 type="submit"
-                className="w-full cursor-pointer bg-[#0a1b3b] text-white font-semibold py-2 rounded-xl hover:bg-blue-900"
+                className="w-full cursor-pointer bg-[#0a1b3b] text-white font-semibold py-2 rounded-xl hover:bg-blue-900 transition-all duration-300"
               >
                 Se connecter
               </button>

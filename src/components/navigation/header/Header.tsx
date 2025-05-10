@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { HiOutlineChevronDown, HiOutlineChevronRight } from "react-icons/hi";
 import { GoTriangleUp } from "react-icons/go";
 import { usePathname } from "next/navigation";
+import SearchModal from "@/components/ui/SearchModal";
 
 export default function Header() {
   const [isScroll, setIsScroll] = useState(false);
@@ -62,7 +63,7 @@ export default function Header() {
   return (
     <>
       {/* Spacer pour compenser la hauteur du header */}
-      <div className={isScroll ? "" : "h-[30px]"}></div>
+      <div className={isScroll ? "" : " h-[18px] sm:h-[30px]"}></div>
 
       <header
         className={` transition-all duration-200 ${
@@ -89,8 +90,8 @@ export default function Header() {
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center gap-10">
               <nav className="flex items-center space-x-6 text-sm">
-                {navLinks.slice(0, 3).map((link) => (
-                  <div key={link.href} className="relative group">
+                {navLinks.slice(0, 3).map((link, index) => (
+                  <div key={index} className="relative group">
                     <Link
                       href={link.href}
                       className={`cursor-pointer group flex items-center gap-1 text-white ${
@@ -156,7 +157,10 @@ export default function Header() {
                   </div>
                 ))}
 
-                <Input onClick={() => setIsSearchModalOpen(true)} />
+                <Input
+                  key={"headerLgInput"}
+                  onClick={() => setIsSearchModalOpen(true)}
+                />
               </nav>
               <Link
                 href="/login"
@@ -171,7 +175,10 @@ export default function Header() {
             {/* Mobile Hamburger */}
             <div className="lg:hidden flex gap-5 items-center">
               <div className="hidden sm:flex">
-                <Input onClick={() => setIsSearchModalOpen(true)} />
+                <Input
+                  key={"headerSmInput"}
+                  onClick={() => setIsSearchModalOpen(true)}
+                />
               </div>
               <div className="flex gap-5 sm:hidden ">
                 <Link href={"/live"} className="relative">
@@ -195,6 +202,13 @@ export default function Header() {
             </div>
           </div>
         </div>
+        {isSearchModalOpen && (
+          <SearchModal
+            key={"headSearchModal"}
+            isSearchModalOpen={isSearchModalOpen}
+            setIsSearchModalOpen={setIsSearchModalOpen}
+          />
+        )}
       </header>
 
       <span className="lg:hidden">
@@ -314,43 +328,6 @@ export default function Header() {
           )}
         </AnimatePresence>
       </span>
-
-      <AnimatePresence>
-        {isSearchModalOpen && (
-          <>
-            {/* Overlay */}
-            <motion.div
-              className="fixed inset-0 bg-white/50 backdrop-blur-sm z-[100]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsSearchModalOpen(false)}
-            />
-
-            {/* Modal */}
-            <motion.div
-              className="fixed left-1/2 top-14 z-[100] w-full bg-white  shadow-lg p-4 transform -translate-x-1/2 -translate-y-1/2"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-            >
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold text-gray-800">
-                  Recherche
-                </h2>
-                <button
-                  onClick={() => setIsSearchModalOpen(false)}
-                  aria-label="Fermer la recherche"
-                  className="text-gray-500 hover:text-gray-700 text-2xl focus:outline-none"
-                >
-                  <FiX cursor={"pointer"} />
-                </button>
-              </div>
-              <Input placeholder="Rechercher..." autoFocus />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </>
   );
 }
