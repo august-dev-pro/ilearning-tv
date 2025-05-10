@@ -1,7 +1,7 @@
 import AuthorInfo from "@/components/ui/AuthorInfo";
 import VideoCard from "@/components/videos/VideoCard2";
 import { Video, videos } from "@/lib/api/videosData";
-import user from "../../../../public/images/stephan-wahl.jpeg";
+import user from "../../../../../public/images/stephan-wahl.jpeg";
 import { FaThumbsUp } from "react-icons/fa";
 import { FiMessageCircle } from "react-icons/fi";
 
