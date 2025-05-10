@@ -2,18 +2,29 @@
 import FeaturedVideoBanner from "@/components/videos/FeaturedVideoBanner";
 import VideoCard from "@/components/videos/VideoCard2";
 import { Video, videos } from "@/lib/api/videosData";
-import banner from "../../public/images/banner.jpg";
+import banner from "../../../public/images/banner.jpg";
 import { useState } from "react";
 import ShowMore from "@/components/ui/ShowMore";
-import { FcAssistant, FcBullish, FcBusinessman, FcIdea } from "react-icons/fc";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { Tab } from "@headlessui/react";
 
-const categories = [
-  { name: "Programmation", icon: <FcIdea />, color: "bg-blue-50" },
-  { name: "Business", icon: <FcBusinessman />, color: "bg-gray-100" },
-  { name: "Design", icon: <FcAssistant />, color: "bg-orange-50" },
-  { name: "Marketing", icon: <FcBullish />, color: "bg-red-50" },
-];
+const groupedVideos = {
+  Tous: videos,
+  Mathématiques: videos.filter((v) => v.category === "Mathématiques"),
+  Astronomie: videos.filter((v) => v.category === "Astronomie"),
+  Technologie: videos.filter((v) => v.category === "Technologie"),
+  Physique: videos.filter((v) => v.category === "Physique"),
+  Géographie: videos.filter((v) => v.category === "Géographie"),
+  Biologie: videos.filter((v) => v.category === "Biologie"),
+  Civisme: videos.filter((v) => v.category === "Civisme"),
+  Économie: videos.filter((v) => v.category === "Économie"),
+  Santé: videos.filter((v) => v.category === "Santé"),
+  Environnement: videos.filter((v) => v.category === "Environnement"),
+  Informatique: videos.filter((v) => v.category === "Informatique"),
+  Histoire: videos.filter((v) => v.category === "Histoire"),
+  Méthodologie: videos.filter((v) => v.category === "Méthodologie"),
+};
+
 /* const channels = [
   { name: "CodeMaster", avatar: "/avatars/code.png", subscribers: "52K" },
   { name: "UX Studio", avatar: "/avatars/design.png", subscribers: "34K" },
@@ -40,7 +51,7 @@ export default function Home() {
       </section>
 
       {/* Recommended Videos */}
-      <section className="section">
+      {/* <section className="section">
         <div className="container px-4 sm:px-0">
           <SectionHeader
             title="Vidéos recommandées"
@@ -52,6 +63,48 @@ export default function Home() {
               <VideoCard key={video.id} video={video} type="normal" />
             ))}
           </div>
+          <ShowMore isExpanded={isExpanded} onToggle={handleToggle} />
+        </div>
+      </section> */}
+      <section className="section">
+        <div className="container px-4 sm:px-0">
+          <SectionHeader
+            title="Vidéos recommandées"
+            sectionSlug="categories"
+            placeholder="Voir plus"
+          />
+
+          <Tab.Group>
+            <Tab.List className="flex space-x-2 sm:space-x-3 mt-4 mb-6 overflow-x-auto no-scrollbar  border-b border-b-gray-300 py-2">
+              {Object.keys(groupedVideos).map((category) => (
+                <Tab
+                  key={category}
+                  className={({ selected }) =>
+                    selected
+                      ? "bg-[#0a1b3b] text-white px-4 rounded-md text-[12px] sm:text-sm cursor-pointer transition-all duration-300"
+                      : "bg-[#0a1b3b10] text-gray-700 px-4 py-[7px] sm:py-2 rounded-md text-[12px] sm:text-sm hover:bg-gray-300 cursor-pointer transition-all duration-300"
+                  }
+                >
+                  {category}
+                </Tab>
+              ))}
+            </Tab.List>
+
+            <Tab.Panels>
+              {Object.values(groupedVideos).map((videos, idx) => (
+                <Tab.Panel key={idx}>
+                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {videos
+                      .slice(0, isExpanded ? videos.length : 6)
+                      .map((video) => (
+                        <VideoCard key={video.id} video={video} type="normal" />
+                      ))}
+                  </div>
+                </Tab.Panel>
+              ))}
+            </Tab.Panels>
+          </Tab.Group>
+
           <ShowMore isExpanded={isExpanded} onToggle={handleToggle} />
         </div>
       </section>
@@ -70,27 +123,6 @@ export default function Home() {
             ))}
           </div>
           <ShowMore isExpanded={isExpanded} onToggle={handleToggle} />
-        </div>
-      </section>
-
-      {/* Section : Catégories Populaires */}
-      <section className="section">
-        <div className="container px-4 sm:px-0">
-          <SectionHeader
-            title="Catégories populaires"
-            sectionSlug="categories"
-          />
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {categories.map((cat, idx) => (
-              <div
-                key={idx}
-                className={`flex items-center gap-3 p-4 rounded-xl shadow-sm hover:shadow-md transition ${cat.color}`}
-              >
-                <div className="text-3xl">{cat.icon}</div>
-                <span className="text-base font-medium">{cat.name}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

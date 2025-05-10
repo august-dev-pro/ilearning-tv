@@ -1,12 +1,11 @@
-// components/videos/VideoCard.tsx
 import { Video } from "@/lib/api/videosData";
 import React from "react";
-import banner from "../../../public/images/banner.jpg";
 import teacherImage from "../../../public/images/stephan-wahl.jpeg";
 import Image from "next/image";
 import Link from "next/link";
 import PlayButton from "../ui/PlayButton";
 import { MdWhatshot, MdWifiTethering } from "react-icons/md";
+import CertifiedBadge from "../ui/CertifiedBadge";
 
 type VideoCardProps = {
   key: string;
@@ -27,7 +26,7 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
   return (
     <article
       className={`bg-white cursor-pointer   transition duration-300 ${
-        isTrend || isLive ? "flex sm:gap-4 items-center" : ""
+        isTrend || isLive ? "flex sm:gap-4 items-start" : ""
       }`}
     >
       {/* Thumbnail */}
@@ -43,7 +42,7 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
             href={`${
               isLive
                 ? `live/${video.id}`
-                : `http://localhost:3000/videos/${video.id}`
+                : `https://ilearning-tv.vercel.app/videos/${video.id}`
             }`}
             className=" transition-all"
           >
@@ -54,19 +53,27 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
           href={`${
             isLive
               ? `live/${video.id}`
-              : `http://localhost:3000/videos/${video.id}`
+              : `https://ilearning-tv.vercel.app/videos/${video.id}`
           }`}
           className=" "
         >
-          <Image
-            src={/* video.thumbnail || */ banner.src}
+          {/*  {<Image
+            src={ video.thumbnail ||  banner.src}
             width={500}
             height={500}
             alt={video.title}
             className={`object-cover h-full w-full ${
               isTrend || isLive ? "  rounded-l-xl" : "w-full h-40"
             }`}
-          />
+          />} */}
+
+          <iframe
+            className="w-full h-full"
+            src={video.videoUrl}
+            title="Vidéo"
+            frameBorder="0"
+            allowFullScreen
+          ></iframe>
         </Link>
 
         {/* LIVE or TREND Badge */}
@@ -78,7 +85,7 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
         )}
 
         {isNormal && (
-          <div className="absolute z-[100] top-[80%] right-2 flex items-center gap-1 bg-black/70 text-white text-xs sm:text-sm font-medium px-2 py-[3px] rounded-md shadow-md">
+          <div className="absolute z-[10] top-[80%] right-2 flex items-center gap-1 bg-black/70 text-white text-xs sm:text-sm font-medium px-2 py-[3px] rounded-md shadow-md">
             <span>21:37</span>
           </div>
         )}
@@ -86,7 +93,7 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
         {(isTrend || isLive) && video.teacherImage && (
           <div className="absolute bottom-2 right-2 flex items-center gap-1">
             <span className="text-[10px] font-[400] sm:text-xs text-white sm:font-bold text-shadow">
-              {video.userName}
+              {video.author}
             </span>
 
             <Image
@@ -102,35 +109,43 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
 
       {/* Content */}
       <div
-        className={`p-3 ${isTrend || isLive ? "w-1/2 sm:w-2/3" : ""} space-y-2`}
+        className={`py-3 ${
+          isTrend || isLive ? "px-3 w-1/2 sm:w-2/3" : ""
+        } space-y-2`}
       >
-        <Link
-          href={`${
-            isLive
-              ? `live/${video.id}`
-              : `http://localhost:3000/videos/${video.id}`
-          }`}
-        >
-          <h4
-            style={{
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-            }}
-            className="text-[13px] sm:text-xl font-[900] text-gray-800 mb-1"
+        {!isNormal && (
+          <Link
+            href={`${
+              isLive
+                ? `live/${video.id}`
+                : `https://ilearning-tv.vercel.app/videos/${video.id}`
+            }`}
           >
-            {video.title}
-          </h4>
-        </Link>
+            <div
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+              className="text-[13px] sm:text-[15px]  lg:text-xl font-[900] text-gray-800 mb-1"
+            >
+              {video.title}
+            </div>
+          </Link>
+        )}
         {(isTrend || isLive) && (
-          <p className=" hidden sm:flex text-xs text-gray-600">
+          <p className=" hidden sm:flex text-xs sm:text-sm text-gray-600">
             {truncatedDescription}
           </p>
         )}
-        <div className="flex flex-wrap gap-[6px] sm:gap-5 items-center">
+        <div
+          className={`flex flex-wrap gap-[6px] sm:gap-5 items-center ${
+            isNormal ? "" : "md:flex-col md:items-start md:gap-1"
+          }`}
+        >
           {isNormal && video.teacherImage ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-start gap-2">
               <Image
                 src={/* video.teacherImage || */ teacherImage.src}
                 width={500}
@@ -138,19 +153,54 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
                 alt="teacher"
                 className=" w-8 h-8 rounded-full border-2 border-white"
               />
-              <p className="text-xs text-gray-500 ">{video.userName}</p>
+              <div className="grid gap-1">
+                <Link
+                  href={`${
+                    isLive
+                      ? `live/${video.id}`
+                      : `https://ilearning-tv.vercel.app/videos/${video.id}`
+                  }`}
+                >
+                  <div
+                    style={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                    className="text-[13px] sm:text-[15px]  lg:text-[18px] font-[900] text-gray-800 mb-1"
+                  >
+                    {video.title}
+                  </div>
+                </Link>
+                <p className="text-xs text-gray-500 flex items-center gap-1">
+                  {video.author}
+                  <CertifiedBadge />
+                </p>
+
+                {(isNormal || isTrend) && (
+                  <div className="flex items-center text-[11px] text-gray-400 space-x-2">
+                    <span>{video.views}k vues</span>
+                    <span>·</span>
+                    <span>il y a {video.publishedAt}</span>
+                  </div>
+                )}
+              </div>
             </div>
           ) : isLive ? (
             <p className="text-xs text-gray-500 ">14k spectateurs</p>
           ) : (
-            <p className="text-xs text-gray-500 ">{video.userName}</p>
-          )}
+            <div className="flex flex-wrap sm:flex-col gap-1 sm:gap-2">
+              <div className="text-xs text-gray-500 flex items-center gap-1">
+                {video.author}
+                <CertifiedBadge />
+              </div>
 
-          {(isNormal || isTrend) && (
-            <div className="flex items-center text-[11px] text-gray-400 space-x-2">
-              <span>{video.views}k vues</span>
-              <span>·</span>
-              <span>il y a {video.publishedAt}</span>
+              <div className="flex items-center text-[11px] text-gray-400 space-x-2">
+                <span>{video.views}k vues</span>
+                <span>·</span>
+                <span>il y a {video.publishedAt}</span>
+              </div>
             </div>
           )}
 

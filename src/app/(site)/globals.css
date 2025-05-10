@@ -16,12 +16,12 @@
 
 @font-face {
   font-family: "Poppins";
-  src: url("../../public/fonts/Poppins/Poppins-Light.ttf") format("woff2");
+  src: url("../../../public/fonts/Poppins/Poppins-Light.ttf") format("woff2");
   font-style: normal;
 }
 @font-face {
   font-family: "Kanit";
-  src: url("../../public/fonts/Kanit/Kanit-Regular.ttf") format("woff2");
+  src: url("../../../public/fonts/Kanit/Kanit-Regular.ttf") format("woff2");
   font-style: normal;
 }
 /* @font-face {
@@ -44,8 +44,8 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-form input,
-form textarea {
+form .input,
+form .textarea {
   @apply w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm
          focus:outline-none focus:ring-2 focus:ring-[#0a1b3b] focus:border-transparent
          transition duration-300;
@@ -88,8 +88,17 @@ form textarea {
 }
 
 .section_header .sec_link {
-  font-size: 0.775rem /* 14px */;
-  line-height: 1.25rem /* 20px */;
+  font-size: 0.775rem;
+  line-height: 1.25rem;
+}
+
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @screen sm {

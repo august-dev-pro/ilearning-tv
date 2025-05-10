@@ -14,12 +14,15 @@ import { CgSearch } from "react-icons/cg";
 import { Input } from "@/components/ui/input";
 import { HiOutlineChevronDown, HiOutlineChevronRight } from "react-icons/hi";
 import { GoTriangleUp } from "react-icons/go";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isScroll, setIsScroll] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+
+  const path = usePathname();
 
   const navLinks = [
     { label: "Accueil", href: "/", icon: <FiHome /> },
@@ -46,7 +49,11 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScroll(window.scrollY > 200);
+      if (path.includes("videos/")) {
+        setIsScroll(window.scrollY > 0);
+      } else {
+        setIsScroll(window.scrollY > 200);
+      }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -229,8 +236,8 @@ export default function Header() {
                   </button>
                 </div>
                 <div className="flex flex-col space-y-4">
-                  {navLinks.map((link) => (
-                    <div key={link.href}>
+                  {navLinks.map((link, index) => (
+                    <div key={index}>
                       <button
                         className="flex items-center gap-2 text-left w-full group"
                         onClick={() => {
@@ -254,6 +261,7 @@ export default function Header() {
                           </span>
                         ) : (
                           <Link
+                            key={index}
                             className="group-hover:underline"
                             href={link.href}
                             onClick={() => {
@@ -279,9 +287,9 @@ export default function Header() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                         >
-                          {link.subLinks?.map((sub) => (
+                          {link.subLinks?.map((sub, index) => (
                             <Link
-                              key={sub.href}
+                              key={index}
                               href={sub.href}
                               className="text-sm hover:underline"
                               onClick={() => setIsMenuOpen(false)}

@@ -3,8 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/navigation/header/Header";
 import Footer from "@/components/navigation/footer/Footer";
-/* import { usePathname } from "next/navigation";
- */
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,11 +24,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  /*   const pathname = usePathname();
-  const noLayoutRoutes = ["/login", "/register"];
-
-  const isAuthPage = noLayoutRoutes.includes(pathname); */
-
   return (
     <html lang="en">
       <body

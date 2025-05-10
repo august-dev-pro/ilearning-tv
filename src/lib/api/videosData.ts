@@ -7,7 +7,7 @@ export type Video = {
   videoUrl: string;
   speaker: string;
   teacherImage: string;
-  userName: string;
+  author: string;
   views: number;
   publishedAt: string;
 };
@@ -23,7 +23,7 @@ export const videos: Video[] = [
     thumbnail: "/images/electricity.jpg",
     videoUrl: "https://www.youtube.com/embed/UEPVwBe4aD8",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -36,7 +36,7 @@ export const videos: Video[] = [
     thumbnail: "/images/egypt.jpg",
     videoUrl: "https://www.youtube.com/embed/FwO2OKBuP90",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -49,7 +49,7 @@ export const videos: Video[] = [
     thumbnail: "/images/programming.jpg",
     videoUrl: "https://www.youtube.com/embed/zOjov-2OZ0E",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -62,7 +62,7 @@ export const videos: Video[] = [
     thumbnail: "/images/maths.jpg",
     videoUrl: "https://www.youtube.com/embed/K6ACzT6PCmM",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -75,7 +75,7 @@ export const videos: Video[] = [
     thumbnail: "/images/french-revolution.jpg",
     videoUrl: "https://www.youtube.com/embed/X-puDfbSSwY",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -88,7 +88,7 @@ export const videos: Video[] = [
     thumbnail: "/images/solar-system.jpg",
     videoUrl: "https://www.youtube.com/embed/libKVRa01L8",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -101,7 +101,7 @@ export const videos: Video[] = [
     thumbnail: "/images/ai.jpg",
     videoUrl: "https://www.youtube.com/embed/2ePf9rue1Ao",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -114,7 +114,7 @@ export const videos: Video[] = [
     thumbnail: "/images/quantum.jpg",
     videoUrl: "https://www.youtube.com/embed/Q1YqgPAtzho",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -127,7 +127,7 @@ export const videos: Video[] = [
     thumbnail: "/images/volcano.jpg",
     videoUrl: "https://www.youtube.com/embed/VNGUdObDoLk",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -140,7 +140,7 @@ export const videos: Video[] = [
     thumbnail: "/images/internet.jpg",
     videoUrl: "https://www.youtube.com/embed/x3c1ih2NJEg",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -153,7 +153,7 @@ export const videos: Video[] = [
     thumbnail: "/images/cell-biology.jpg",
     videoUrl: "https://www.youtube.com/embed/URUJD5NEXC8",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -166,7 +166,7 @@ export const videos: Video[] = [
     thumbnail: "/images/democracy.jpg",
     videoUrl: "https://www.youtube.com/embed/8gr5rIK097U",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -179,7 +179,7 @@ export const videos: Video[] = [
     thumbnail: "/images/economy.jpg",
     videoUrl: "https://www.youtube.com/embed/3ez10ADR_gM",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -192,7 +192,7 @@ export const videos: Video[] = [
     thumbnail: "/images/first-aid.jpg",
     videoUrl: "https://www.youtube.com/embed/1kSyGd4NQZQ",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -205,7 +205,7 @@ export const videos: Video[] = [
     thumbnail: "/images/climate.jpg",
     videoUrl: "https://www.youtube.com/embed/EtW2rrLHs08",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -218,7 +218,7 @@ export const videos: Video[] = [
     thumbnail: "/images/html.jpg",
     videoUrl: "https://www.youtube.com/embed/qz0aGYrrlhU",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -231,7 +231,7 @@ export const videos: Video[] = [
     thumbnail: "/images/ww2.jpg",
     videoUrl: "https://www.youtube.com/embed/UUg7pMi4N0I",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -244,7 +244,7 @@ export const videos: Video[] = [
     thumbnail: "/images/essay.jpg",
     videoUrl: "https://www.youtube.com/embed/PrO_XYoHiT4",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -257,7 +257,7 @@ export const videos: Video[] = [
     thumbnail: "/images/photosynthesis.jpg",
     videoUrl: "https://www.youtube.com/embed/LVvKjt2sda0",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
   {
@@ -270,7 +270,7 @@ export const videos: Video[] = [
     thumbnail: "/images/css.jpg",
     videoUrl: "https://www.youtube.com/embed/OEV8gMkCHXQ",
     views: 12,
-    userName: "august-dev",
+    author: "Jean Dupont",
     publishedAt: "3 mois",
   },
 ];

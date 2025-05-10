@@ -5,17 +5,8 @@ import React from "react";
 const LoginPage = () => {
   return (
     <div>
-      <div className="py-36 flex items-center">
+      <div className="py-10 flex items-center">
         <div className="container px-4 sm:px-0 grid items-center justify-center gap-6 md:gap-10">
-          {/* Logo */}
-          <Link
-            href={"/"}
-            className="text-2xl text-center md:text-base  lg:text-3xl font-[900]"
-          >
-            <span>iLEARNING</span>
-            <span className="text-blue-400"> TV</span>
-          </Link>
-
           <div className="max-w-md m-[0_auto] w-full  bg-white border border-gray-200 md:border-gray-100 rounded-2xl shadow-lg p-5 sm:p-8 space-y-6">
             <h1
               className="mb-6 text-xl
@@ -35,7 +26,7 @@ md:text-2xl  font-[900] text-black text-center border-gray-300 border-b pb-4"
                   type="email"
                   id="email"
                   required
-                  className="mt-1 w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  className="input mt-1 w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
@@ -50,7 +41,7 @@ md:text-2xl  font-[900] text-black text-center border-gray-300 border-b pb-4"
                   type="password"
                   id="password"
                   required
-                  className="mt-1 w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  className="input mt-1 w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
