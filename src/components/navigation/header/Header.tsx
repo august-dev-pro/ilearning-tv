@@ -34,7 +34,11 @@ export default function Header() {
       isSubMenu: true,
       isBold: true,
       subLinks: [
-        { label: "Mathematiques", href: "/categories/maths", videos: 127 },
+        {
+          label: "Mathematiques",
+          href: "/categories/mathématiques",
+          videos: 127,
+        },
         { label: "Science", href: "/categories/science", videos: 3412 },
         { label: "Temps anciens", href: "/categories/histoire", videos: 1204 },
         { label: "Histoire", href: "/categories/histoire", videos: 132 },
