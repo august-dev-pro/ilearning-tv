@@ -27,7 +27,7 @@ export default function VideoPageById() {
         setLoading(false);
       });
     }
-  }, [decodedId]);
+  }, [decodedId, getVideoById]);
 
   if (loading || !selectedVideo) {
     return <PlayVideoPageSkeleton />;

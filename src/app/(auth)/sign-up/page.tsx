@@ -19,8 +19,8 @@ export default function SignUpPage() {
     setError(null);
     try {
       await register({ email, name, password });
-    } catch (err) {
-      setError("Échec de l'inscription. Veuillez réessayer.");
+    } catch (err: any) {
+      setError(`Échec de l'inscription. Veuillez réessayer.: ${err.message}`);
     } finally {
       setLoading(false);
     }

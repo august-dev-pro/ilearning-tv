@@ -18,8 +18,10 @@ const LoginPage = () => {
     setError(null);
     try {
       await login(email, password);
-    } catch (err) {
-      setError("Échec de la connexion. Veuillez vérifier vos identifiants.");
+    } catch (err: any) {
+      setError(
+        `Échec de la connexion. Veuillez vérifier vos identifiants: ${err.message}`
+      );
     } finally {
       setLoading(false);
     }
