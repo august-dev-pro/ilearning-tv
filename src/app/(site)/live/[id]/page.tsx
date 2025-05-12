@@ -1,0 +1,124 @@
+import AuthorInfo from "@/components/ui/AuthorInfo";
+import VideoCard from "@/components/videos/VideoCard2";
+import { Video, lives } from "@/lib/api/videosData";
+import { FaThumbsUp } from "react-icons/fa";
+import { FiEye } from "react-icons/fi";
+import user from "../../../../../public/images/stephan-wahl.jpeg";
+
+export default async function LivePageById({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const selectedLive = lives.find((live) => live.id === id);
+
+  if (!selectedLive) {
+    return (
+      <div className="min-h-[calc(100vh-400px)] text-center py-20">
+        Live non trouvé.
+      </div>
+    );
+  }
+
+  const relatedLives = lives.filter(
+    (live) =>
+      live.category === selectedLive.category ||
+      live.description.includes(selectedLive.category)
+  );
+
+  return (
+    <div className="min-h-screen text-gray-800">
+      <div className="container">
+        <main className="mx-auto py-6 sm:py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            {/* Live Player + Description */}
+            <div>
+              {/* Player */}
+              <div className="aspect-video bg-black lg:rounded-xl overflow-hidden shadow-lg">
+                <iframe
+                  className="w-full h-full"
+                  src={selectedLive?.videoUrl}
+                  title="Live Vidéo"
+                  frameBorder="0"
+                  allowFullScreen
+                ></iframe>
+              </div>
+
+              <div className="px-4 sm:px-0">
+                {/* Infos */}
+                <h1 className="mt-4 text-lg sm:text-xl md:text-2xl font-bold text-[#0a1b3b]">
+                  {selectedLive.title}
+                </h1>
+                <p className="text-sm text-gray-500 mt-1">
+                  En direct • {selectedLive.currentViewers} spectateurs
+                </p>
+
+                <AuthorInfo
+                  teacherImage={user.src}
+                  author={selectedLive.author}
+                  certified={true}
+                />
+
+                <div className="flex items-center space-x-6 mt-4">
+                  <button className="flex items-center space-x-2 cursor-pointer">
+                    <FaThumbsUp />
+                    <span className="text-sm">{selectedLive.likes || 0}</span>
+                  </button>
+
+                  <button className="flex items-center space-x-2 cursor-pointer">
+                    <FiEye />
+                    <span className="text-sm">
+                      {selectedLive.currentViewers} spectateurs
+                    </span>
+                  </button>
+                </div>
+
+                {/* Description */}
+                <div className="mt-4 text-sm text-gray-700 space-y-2">
+                  <p>🔗 Ressources disponibles dans la description.</p>
+                  <p>{selectedLive?.description}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Suggestions */}
+          <aside className="space-y-4 px-4 sm:px-0 lg:pl-4 border-gray-200 lg:max-h-[100vh] lg:overflow-y-auto lg:border-l custom-scroll">
+            <h2 className="text-lg font-semibold text-[#0a1b3b] mb-2">
+              Lives similaires
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4 lg:grid-cols-1 space-y-3">
+              {relatedLives.slice(0, 8).map((live: Video) => (
+                <VideoCard
+                  key={live.id}
+                  video={live}
+                  type="live"
+                  isMiniatureSugession={true}
+                />
+              ))}
+            </div>
+
+            {relatedLives.length < 8 && (
+              <div className="border-t border-t-gray-200 pt-2">
+                <h2 className="text-lg font-semibold text-[#0a1b3b] mb-2">
+                  Autres lives
+                </h2>
+                <div className="grid sm:grid-cols-2 gap-4 lg:grid-cols-1 space-y-3">
+                  {lives.slice(0, 8).map((live: Video) => (
+                    <VideoCard
+                      key={live.id}
+                      video={live}
+                      type="live"
+                      isMiniatureSugession={true}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </aside>
+        </main>
+      </div>
+    </div>
+  );
+}

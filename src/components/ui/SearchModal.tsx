@@ -1,9 +1,11 @@
+"use client";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiX } from "react-icons/fi";
 import { videos } from "@/lib/api/videosData";
 import Link from "next/link";
 import { Input } from "./input";
+import { useRouter } from "next/navigation";
 
 export default function SearchModal({
   isSearchModalOpen,
@@ -13,10 +15,20 @@ export default function SearchModal({
   setIsSearchModalOpen: (open: boolean) => void;
 }) {
   const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
 
   const filteredVideos = videos.filter((video) =>
     video.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSearchModalOpen(false);
+    if (searchQuery.trim()) {
+      // Redirige vers la page des résultats avec le slug correspondant
+      router.push(`/search/${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -56,6 +68,7 @@ export default function SearchModal({
               autoFocus
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onSearch={handleSearch}
             />
           </motion.div>
 

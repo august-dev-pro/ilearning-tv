@@ -1,10 +1,11 @@
+"use client";
 import { cn } from "@/lib/utils/uitils";
 import * as React from "react";
 import { BiSearch } from "react-icons/bi";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  onSearch?: () => void; // 👈 optionnel : pour le clic sur la loupe
+  onSearch?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(

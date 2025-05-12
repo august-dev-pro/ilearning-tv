@@ -11,50 +11,48 @@ type VideoCardProps = {
   key: string;
   video: Video;
   type?: "normal" | "live" | "trend";
+  isMiniatureSugession?: boolean;
 };
 
-export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
+export default function VideoCard({
+  video,
+  type = "normal",
+  isMiniatureSugession,
+}: VideoCardProps) {
   const isLive = type === "live";
   const isTrend = type === "trend";
   const isNormal = type === "normal";
-
-  const truncatedDescription =
-    video.description.length > 100
-      ? `${video.description.substring(0, 100)}...`
-      : video.description;
+  const description = video.description;
 
   return (
     <article
-      className={`bg-white cursor-pointer   transition duration-300 ${
-        isTrend || isLive ? "flex sm:gap-4 items-start" : ""
-      }`}
+      className={`bg-white cursor-pointer transition duration-300
+      ${isTrend || isLive ? "" : ""}
+      ${
+        (isTrend || isLive) && isMiniatureSugession
+          ? "!flex-col"
+          : "flex sm:gap-4 items-start"
+      }
+    `}
     >
       {/* Thumbnail */}
       <div
         className={`relative  md:h-[210px] group rounded-xl overflow-hidden transition-all duration-300 border-2 border-transparent hover:border-red-600 ${
-          isTrend || isLive
+          (isTrend || isLive) && !isMiniatureSugession
             ? "h-[115px] w-1/2 sm:w-1/3 max-h-[90px] sm:max-h-[100px] md:max-h-40"
-            : "h-[200px]"
+            : "h-[200px] w-full"
         }`}
       >
         {isNormal && (
           <Link
-            href={`${
-              isLive
-                ? `live/${video.id}`
-                : `https://ilearning-tv.vercel.app/videos/${video.id}`
-            }`}
+            href={`${isLive ? `/live/${video.id}` : `/videos/${video.id}`}`}
             className=" transition-all"
           >
             <PlayButton className="absolute right-[40%] top-[40%]" />
           </Link>
         )}
         <Link
-          href={`${
-            isLive
-              ? `live/${video.id}`
-              : `https://ilearning-tv.vercel.app/videos/${video.id}`
-          }`}
+          href={`${isLive ? `/live/${video.id}` : `/videos/${video.id}`}`}
           className=" "
         >
           {/*  {<Image
@@ -110,16 +108,14 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
       {/* Content */}
       <div
         className={`py-3 ${
-          isTrend || isLive ? "px-3 w-1/2 sm:w-2/3" : ""
+          (isTrend || isLive) && !isMiniatureSugession
+            ? "px-3 w-1/2 sm:w-2/3"
+            : ""
         } space-y-2`}
       >
         {!isNormal && (
           <Link
-            href={`${
-              isLive
-                ? `live/${video.id}`
-                : `https://ilearning-tv.vercel.app/videos/${video.id}`
-            }`}
+            href={`${isLive ? `/live/${video.id}` : `/videos/${video.id}`}`}
           >
             <div
               style={{
@@ -135,8 +131,8 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
           </Link>
         )}
         {(isTrend || isLive) && (
-          <p className=" hidden sm:flex text-xs sm:text-sm text-gray-600">
-            {truncatedDescription}
+          <p className="hidden sm:flex text-xs sm:text-sm text-gray-600 ">
+            <span className="line-clamp-1 md:!line-clamp-2">{description}</span>
           </p>
         )}
         <div
@@ -156,9 +152,7 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
               <div className="grid gap-1">
                 <Link
                   href={`${
-                    isLive
-                      ? `live/${video.id}`
-                      : `https://ilearning-tv.vercel.app/videos/${video.id}`
+                    isLive ? `/live/${video.id}` : `/videos/${video.id}`
                   }`}
                 >
                   <div
@@ -188,7 +182,9 @@ export default function VideoCard({ video, type = "normal" }: VideoCardProps) {
               </div>
             </div>
           ) : isLive ? (
-            <p className="text-xs text-gray-500 ">14k spectateurs</p>
+            <p className="text-xs text-gray-500 ">
+              {video.currentViewers}k spectateurs
+            </p>
           ) : (
             <div className="flex flex-wrap sm:flex-col gap-1 sm:gap-2">
               <div className="text-xs text-gray-500 flex items-center gap-1">

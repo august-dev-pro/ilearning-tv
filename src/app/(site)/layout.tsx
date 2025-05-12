@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: "Votre Web TV éducative",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
