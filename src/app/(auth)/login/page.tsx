@@ -18,9 +18,9 @@ const LoginPage = () => {
     setError(null);
     try {
       await login(email, password);
-    } catch (err: any) {
+    } catch (err) {
       setError(
-        `Échec de la connexion. Veuillez vérifier vos identifiants: ${err.message}`
+        `Échec de la connexion. Veuillez vérifier vos identifiants: ${err}`
       );
     } finally {
       setLoading(false);
