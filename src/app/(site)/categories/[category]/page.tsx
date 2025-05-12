@@ -23,7 +23,7 @@ export default function VideosByCategoryPage() {
       setVideos(data);
       setLoading(false);
     });
-  }, [decodedCategory]);
+  }, [decodedCategory, getVideosByCategory]);
 
   if (loading) {
     return <SkeletonLoader count={9} />;

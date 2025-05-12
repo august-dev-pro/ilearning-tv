@@ -5,7 +5,6 @@ import { useParams } from "next/navigation";
 import { useVideos } from "@/contexts/VideosContext";
 import AuthorInfo from "@/components/ui/AuthorInfo";
 import VideoCard from "@/components/videos/VideoCard2";
-import SkeletonLoader from "@/components/ui/SkeletonLoader";
 import user from "@/../public/images/stephan-wahl.jpeg";
 import { FaThumbsUp } from "react-icons/fa";
 import { FiChevronRight, FiMessageCircle } from "react-icons/fi";
