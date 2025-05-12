@@ -27,12 +27,8 @@ export default function VideoCard({
   return (
     <article
       className={`bg-white cursor-pointer transition duration-300
-      ${isTrend || isLive ? "" : ""}
-      ${
-        (isTrend || isLive) && isMiniatureSugession
-          ? "!flex-col"
-          : "flex sm:gap-4 items-start"
-      }
+      ${isTrend || isLive ? "flex sm:gap-4 items-start" : ""}
+      ${(isTrend || isLive) && isMiniatureSugession ? "!flex-col" : ""}
     `}
     >
       {/* Thumbnail */}
@@ -172,20 +168,21 @@ export default function VideoCard({
                   <CertifiedBadge />
                 </p>
 
-                {(isNormal || isTrend) && (
-                  <div className="flex items-center text-[11px] text-gray-400 space-x-2">
-                    <span>{video.views}k vues</span>
-                    <span>·</span>
-                    <span>il y a {video.publishedAt}</span>
-                  </div>
-                )}
+                <div className="flex items-center text-[11px] text-gray-400 space-x-1 sm:space-x-2">
+                  <span>{video.views}k vues</span>
+                  <span>·</span>
+                  <span className="w-max">
+                    <span className="">il y a</span>
+                    {video.publishedAt}
+                  </span>
+                </div>
               </div>
             </div>
           ) : isLive ? (
             <p className="text-xs text-gray-500 ">
               {video.currentViewers}k spectateurs
             </p>
-          ) : (
+          ) : isTrend ? (
             <div className="flex flex-wrap sm:flex-col gap-1 sm:gap-2">
               <div className="text-xs text-gray-500 flex items-center gap-1">
                 {video.author}
@@ -198,7 +195,7 @@ export default function VideoCard({
                 <span>il y a {video.publishedAt}</span>
               </div>
             </div>
-          )}
+          ) : null}
 
           {isLive && (
             <span className="hidden sm:flex items-center gap-1 text-[13px] sm:text-sm text-gray-600 font-bold">

@@ -18,7 +18,7 @@ const Suggestions = () => {
 
   return (
     <section className="section">
-      <div className="container">
+      <div className="container px-4 sm:px-0">
         <SectionHeader
           title={"Vidéos suggérées"}
           videosLink="/videos/news"
