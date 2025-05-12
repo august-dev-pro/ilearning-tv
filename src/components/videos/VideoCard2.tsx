@@ -1,4 +1,3 @@
-import { Video } from "@/lib/api/videosData";
 import React from "react";
 import teacherImage from "../../../public/images/stephan-wahl.jpeg";
 import Image from "next/image";
@@ -6,6 +5,7 @@ import Link from "next/link";
 import PlayButton from "../ui/PlayButton";
 import { MdWhatshot, MdWifiTethering } from "react-icons/md";
 import CertifiedBadge from "../ui/CertifiedBadge";
+import { Video } from "@/types/Video";
 
 type VideoCardProps = {
   key: string;
@@ -87,7 +87,7 @@ export default function VideoCard({
         {(isTrend || isLive) && video.teacherImage && (
           <div className="absolute bottom-2 right-2 flex items-center gap-1">
             <span className="text-[10px] font-[400] sm:text-xs text-white sm:font-bold text-shadow">
-              {video.author}
+              {video.authorId}
             </span>
 
             <Image
@@ -103,10 +103,10 @@ export default function VideoCard({
 
       {/* Content */}
       <div
-        className={`py-3 ${
+        className={` ${
           (isTrend || isLive) && !isMiniatureSugession
             ? "px-3 w-1/2 sm:w-2/3"
-            : ""
+            : "py-3"
         } space-y-2`}
       >
         {!isNormal && (
@@ -164,7 +164,7 @@ export default function VideoCard({
                   </div>
                 </Link>
                 <p className="text-xs text-gray-500 flex items-center gap-1">
-                  {video.author}
+                  {video.authorId}
                   <CertifiedBadge />
                 </p>
 
@@ -183,16 +183,18 @@ export default function VideoCard({
               {video.currentViewers}k spectateurs
             </p>
           ) : isTrend ? (
-            <div className="flex flex-wrap sm:flex-col gap-1 sm:gap-2">
+            <div className="flex flex-col gap-1 sm:gap-2">
               <div className="text-xs text-gray-500 flex items-center gap-1">
-                {video.author}
+                {video.authorId}
                 <CertifiedBadge />
               </div>
-
-              <div className="flex items-center text-[11px] text-gray-400 space-x-2">
-                <span>{video.views}k vues</span>
+              <div className="flex items-center text-[11px] text-gray-400 space-x-2 ">
+                <span className="w-max">{video.views}k vues</span>
                 <span>·</span>
-                <span>il y a {video.publishedAt}</span>
+                <span className="flex flex-row gap-1 w-max">
+                  <span className="hidden sm:!flex">publié le</span>
+                  {video.publishedAt}
+                </span>
               </div>
             </div>
           ) : null}

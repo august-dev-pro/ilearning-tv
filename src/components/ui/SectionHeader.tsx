@@ -17,7 +17,7 @@ export default function SectionHeader({
       {videosLink && (
         <Link
           href={`${videosLink}`}
-          className="sec_link font-medium border-b border-b-transparent text-primary hover:text-primary/80 hover:border-b-gray-700 transition-colors"
+          className=" w-max sec_link font-medium border-b border-b-transparent text-primary hover:text-primary/80 hover:border-b-gray-700 transition-colors"
         >
           {(placeholder && placeholder) || "Voir tout"} &rarr;
         </Link>

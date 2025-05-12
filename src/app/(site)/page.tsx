@@ -1,12 +1,14 @@
 "use client";
 import FeaturedVideoBanner from "@/components/videos/FeaturedVideoBanner";
 import VideoCard from "@/components/videos/VideoCard2";
-import { lives, Video, videos } from "@/lib/api/videosData";
 import banner from "../../../public/images/banner.jpg";
 import { useState } from "react";
 import ShowMore from "@/components/ui/ShowMore";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { Tab } from "@headlessui/react";
+import { useVideos } from "@/contexts/VideosContext";
+import { Video } from "@/types/Video";
+import HomeSkeleton from "@/components/ui/HomeSkeleton";
 
 export default function Home() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -15,6 +17,12 @@ export default function Home() {
   const handleToggle = () => {
     setIsExpanded((prev) => !prev);
   };
+
+  const { liveVideos, videos, isLoading } = useVideos();
+
+  if (isLoading) {
+    return <HomeSkeleton />;
+  }
 
   const groupedVideos = {
     Tous: videos,
@@ -33,7 +41,7 @@ export default function Home() {
     Méthodologie: videos.filter((v) => v.category === "Méthodologie"),
   };
 
-  const videosToShow = isExpanded ? videos.slice(0, 9) : videos.slice(0, 6); // exemple simple
+  const videosToShow = isExpanded ? videos.slice(0, 9) : videos.slice(0, 6);
   return (
     <main className="">
       {/* Featured Video */}
@@ -101,7 +109,7 @@ export default function Home() {
             placeholder="Tous Les Lives"
           />
           <div className="grid gap-4">
-            {lives.slice(0, 4).map((video: Video) => (
+            {liveVideos.slice(0, 4).map((video: Video) => (
               <VideoCard key={video.id} video={video} type="live" />
             ))}
           </div>

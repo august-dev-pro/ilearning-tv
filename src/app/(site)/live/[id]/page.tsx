@@ -1,17 +1,37 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { useVideos } from "@/contexts/VideosContext";
 import AuthorInfo from "@/components/ui/AuthorInfo";
 import VideoCard from "@/components/videos/VideoCard2";
-import { Video, lives } from "@/lib/api/videosData";
+import { Video } from "@/types/Video";
+import user from "../../../../../public/images/stephan-wahl.jpeg";
 import { FaThumbsUp } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
-import user from "../../../../../public/images/stephan-wahl.jpeg";
+import PlayVideoPageSkeleton from "@/components/ui/skeletons/PlayVideoPageSkeleton";
 
-export default async function LivePageById({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-  const selectedLive = lives.find((live) => live.id === id);
+export default function LivePageById() {
+  const params = useParams();
+  const liveId = params.id as string;
+  const decodedId = decodeURIComponent(liveId);
+  const { getVideoById, liveVideos } = useVideos();
+  const [selectedLive, setSelectedLive] = useState<Video | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchLive() {
+      const live = await getVideoById(decodedId);
+      setSelectedLive(live);
+      setLoading(false);
+    }
+
+    fetchLive();
+  }, [decodedId, getVideoById]);
+
+  if (loading) {
+    return <PlayVideoPageSkeleton />;
+  }
 
   if (!selectedLive) {
     return (
@@ -21,10 +41,13 @@ export default async function LivePageById({
     );
   }
 
-  const relatedLives = lives.filter(
+  const relatedLives = liveVideos.filter(
     (live) =>
-      live.category === selectedLive.category ||
-      live.description.includes(selectedLive.category)
+      live.category === selectedLive.category && live.id !== selectedLive.id
+  );
+
+  const sugessionLives = liveVideos.filter(
+    (live) => live.id !== selectedLive.id
   );
 
   return (
@@ -56,7 +79,7 @@ export default async function LivePageById({
 
                 <AuthorInfo
                   teacherImage={user.src}
-                  author={selectedLive.author}
+                  author={selectedLive.authorId}
                   certified={true}
                 />
 
@@ -89,14 +112,19 @@ export default async function LivePageById({
               Lives similaires
             </h2>
             <div className="grid sm:grid-cols-2 gap-4 lg:grid-cols-1 space-y-3">
-              {relatedLives.slice(0, 8).map((live: Video) => (
-                <VideoCard
-                  key={live.id}
-                  video={live}
-                  type="live"
-                  isMiniatureSugession={true}
-                />
-              ))}
+              {relatedLives
+                .slice(0, 8)
+                .map(
+                  (live: Video) =>
+                    live.id != selectedLive.id && (
+                      <VideoCard
+                        key={live.id}
+                        video={live}
+                        type="live"
+                        isMiniatureSugession={true}
+                      />
+                    )
+                )}
             </div>
 
             {relatedLives.length < 8 && (
@@ -105,7 +133,7 @@ export default async function LivePageById({
                   Autres lives
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-4 lg:grid-cols-1 space-y-3">
-                  {lives.slice(0, 8).map((live: Video) => (
+                  {sugessionLives.slice(0, 8).map((live: Video) => (
                     <VideoCard
                       key={live.id}
                       video={live}

@@ -2,10 +2,10 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiX } from "react-icons/fi";
-import { videos } from "@/lib/api/videosData";
 import Link from "next/link";
 import { Input } from "./input";
 import { useRouter } from "next/navigation";
+import { useVideos } from "@/contexts/VideosContext";
 
 export default function SearchModal({
   isSearchModalOpen,
@@ -16,6 +16,7 @@ export default function SearchModal({
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
+  const { videos } = useVideos();
 
   const filteredVideos = videos.filter((video) =>
     video.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -25,7 +26,6 @@ export default function SearchModal({
     e.preventDefault();
     setIsSearchModalOpen(false);
     if (searchQuery.trim()) {
-      // Redirige vers la page des résultats avec le slug correspondant
       router.push(`/search/${encodeURIComponent(searchQuery.trim())}`);
     }
   };
@@ -47,7 +47,7 @@ export default function SearchModal({
           {/* Modal */}
           <motion.div
             key="modal"
-            className="fixed left-1/2 top-14 z-[100] w-full bg-white  shadow-lg p-4 transform -translate-x-1/2 -translate-y-1/2"
+            className="fixed left-1/2 top-14 z-[100] w-full bg-white shadow-lg p-4 transform -translate-x-1/2 -translate-y-1/2"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
@@ -73,7 +73,6 @@ export default function SearchModal({
           </motion.div>
 
           {/* Suggestions */}
-
           <div className="fixed shadow-2xl sm:left-5 shadow-slate-950 top-[100px] w-full max-w-[428px] max-h-[calc(100vh-200px)] no-scrollbar overflow-y-auto z-[100] bg-white rounded-md sm:rounded-xl">
             <AnimatePresence>
               {searchQuery &&
@@ -91,11 +90,6 @@ export default function SearchModal({
                         className="flex items-center w-full"
                         onClick={() => setIsSearchModalOpen(false)}
                       >
-                        {/* <img
-                          src={video.thumbnail}
-                          alt={video.title}
-                          className="w-16 h-10 object-cover rounded"
-                        /> */}
                         <span className="ml-3 text-sm text-gray-700">
                           {video.title}
                         </span>

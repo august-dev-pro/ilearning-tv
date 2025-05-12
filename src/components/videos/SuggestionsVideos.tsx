@@ -3,10 +3,11 @@ import VideoCard from "@/components/videos/VideoCard2";
 import ShowMore from "../ui/ShowMore";
 import { useState } from "react";
 import SectionHeader from "../ui/SectionHeader";
-import { videos } from "@/lib/api/videosData";
+import { useVideos } from "@/contexts/VideosContext";
 
 const Suggestions = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { videos } = useVideos();
 
   const handleToggle = () => {
     setIsExpanded((prev) => !prev);

@@ -1,19 +1,42 @@
+"use client";
+
 import SocialLoginButtons from "@/components/ui/SocialLoginButtons";
 import Link from "next/link";
+import React, { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function SignUpPage() {
+  const { register } = useAuth();
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    try {
+      await register({ email, name, password });
+    } catch (err) {
+      setError("Échec de l'inscription. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="py-5 flex items-center">
       <div className="container px-4 sm:px-0 grid items-center justify-center gap-6 md:gap-10">
         <div className="max-w-md xl:min-w-md m-[0_auto] w-full bg-white border border-gray-200 md:border-gray-100 rounded-2xl shadow-lg p-6 sm:p-8 space-y-6">
-          <h1
-            className="mb-6 pb-4 text-xl
-sm:text-2xl  font-[900] text-black text-center border-gray-300 border-b"
-          >
+          <h1 className="mb-6 pb-4 text-xl sm:text-2xl font-[900] text-black text-center border-gray-300 border-b">
             Créez votre compte
           </h1>
-          {/* Formulaire inscription */}
-          <form className="space-y-5">
+          {error && (
+            <div className="text-red-500 text-sm text-center">{error}</div>
+          )}
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="fullname"
@@ -24,6 +47,8 @@ sm:text-2xl  font-[900] text-black text-center border-gray-300 border-b"
               <input
                 type="text"
                 id="fullname"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
                 className="input mt-1 w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-blue-500 focus:border-blue-500"
               />
@@ -39,6 +64,8 @@ sm:text-2xl  font-[900] text-black text-center border-gray-300 border-b"
               <input
                 type="email"
                 id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="input mt-1 w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-blue-500 focus:border-blue-500"
               />
@@ -54,6 +81,8 @@ sm:text-2xl  font-[900] text-black text-center border-gray-300 border-b"
               <input
                 type="password"
                 id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="input mt-1 w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-blue-500 focus:border-blue-500"
               />
@@ -61,9 +90,10 @@ sm:text-2xl  font-[900] text-black text-center border-gray-300 border-b"
 
             <button
               type="submit"
+              disabled={loading}
               className="w-full bg-[#0a1b3b] text-white font-semibold py-2 rounded-xl hover:bg-blue-900 cursor-pointer transition-all duration-200"
             >
-              Créer un compte
+              {loading ? "Création en cours..." : "Créer un compte"}
             </button>
           </form>
           <p className="text-center flex gap-1 flex-wrap text-sm text-gray-600">
@@ -72,7 +102,6 @@ sm:text-2xl  font-[900] text-black text-center border-gray-300 border-b"
               Connectez-vous
             </Link>
           </p>
-          {/* OU separateur */}
           <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300" />
@@ -81,7 +110,6 @@ sm:text-2xl  font-[900] text-black text-center border-gray-300 border-b"
               <span className="bg-white px-2 text-gray-500">ou</span>
             </div>
           </div>
-          {/* Boutons providers */}
           <SocialLoginButtons />
         </div>
       </div>
