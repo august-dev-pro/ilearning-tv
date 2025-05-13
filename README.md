@@ -5,6 +5,19 @@ Elle permet de parcourir, filtrer et consulter des vidéos éducatives gratuites
 
 ---
 
+## 📑 Table des matières
+
+- [✨ Fonctionnalités principales](#-fonctionnalités-principales)
+- [🧠 Gestion d’état et architecture](#-gestion-détat-et-architecture)
+- [🏗️ Choix techniques](#-choix-techniques)
+- [🚀 Installation et démarrage](#-installation-et-démarrage)
+- [📂 Structure du projet](#-structure-du-projet)
+- [📸 Captures d’écran de quelques pages](#-captures-décran-de-quelques-pages)
+- [🌍 Déploiement](#-déploiement)
+- [📞 Contact](#-contact)
+
+---
+
 ## ✨ Fonctionnalités principales
 
 - Page d’accueil avec sections dynamiques :
@@ -182,6 +195,8 @@ Visitez http://localhost:3000
 
 Le projet est déjà déployé sur Vercel :
 ➡️ [https://ilearning-tv.vercel.app](https://ilearning-tv.vercel.app)
+
+> ℹ️ **Note** : J’avais initialement prévu d’ajouter un backend NestJS pour la gestion dynamique des vidéos et de l’authentification. Par manque de temps sur ce test, j’ai opté pour une version mockée côté front, mais l’architecture est pensée pour accueillir facilement un backend REST (NestJS ou autre) par la suite.
 
 ## Ce projet est prêt à être connecté à :
 
