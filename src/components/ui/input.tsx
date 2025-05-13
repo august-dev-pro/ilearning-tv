@@ -13,14 +13,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <form
         onSubmit={(e) => {
-          e.preventDefault(); // Empêche le rechargement de la page
+          e.preventDefault();
           if (onSearch) {
-            onSearch(e); // Appelle la fonction onSearch si elle est définie
+            onSearch(e);
           }
         }}
         className="flex w-full max-w-md border border-gray-300 rounded-full overflow-hidden  shadow-sm focus-within:ring-2 focus-within:ring-blue-500 transition-all"
       >
-        {/* Input field */}
         <input
           ref={ref}
           className={cn(
@@ -30,7 +29,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
 
-        {/* Search button */}
         <button
           type="submit"
           className="px-6 flex cursor-pointer items-center bg-gray-100 hover:bg-gray-200  hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-300 hover:shadow-md
