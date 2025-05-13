@@ -5,13 +5,21 @@ import { BiSearch } from "react-icons/bi";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  onSearch?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  onSearch?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, onSearch, ...props }, ref) => {
     return (
-      <div className="flex w-full max-w-md border border-gray-300 rounded-full overflow-hidden  shadow-sm focus-within:ring-2 focus-within:ring-blue-500 transition-all">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault(); // Empêche le rechargement de la page
+          if (onSearch) {
+            onSearch(e); // Appelle la fonction onSearch si elle est définie
+          }
+        }}
+        className="flex w-full max-w-md border border-gray-300 rounded-full overflow-hidden  shadow-sm focus-within:ring-2 focus-within:ring-blue-500 transition-all"
+      >
         {/* Input field */}
         <input
           ref={ref}
@@ -23,15 +31,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         />
 
         {/* Search button */}
-        <div
-          onClick={onSearch}
+        <button
+          type="submit"
           className="px-6 flex cursor-pointer items-center bg-gray-100 hover:bg-gray-200  hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-300 hover:shadow-md
     transition-all duration-300 ease-in-out
     focus:outline-none focus:ring-2 focus:ring-[#0a1b3bcc]"
         >
           <BiSearch scale={105} className=" w-5 h-5 text-gray-600" />
-        </div>
-      </div>
+        </button>
+      </form>
     );
   }
 );
