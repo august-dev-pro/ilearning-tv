@@ -4,7 +4,7 @@ import Suggestions from "@/components/videos/SuggestionsVideos";
 import VideoCard from "@/components/videos/VideoCard";
 import { useState } from "react";
 import { useVideos } from "@/contexts/VideosContext";
-import SkeletonLoader from "@/components/ui/SkeletonLoader";
+import SkeletonLoader from "@/components/ui/skeletons/SkeletonLoader";
 
 export default function RecentVideosPage() {
   const [isExpanded, setIsExpanded] = useState(false);

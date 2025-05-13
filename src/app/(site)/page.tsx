@@ -8,7 +8,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import { Tab } from "@headlessui/react";
 import { useVideos } from "@/contexts/VideosContext";
 import { Video } from "@/types/Video";
-import HomeSkeleton from "@/components/ui/HomeSkeleton";
+import HomeSkeleton from "@/components/ui/skeletons/HomeSkeleton";
 
 export default function Home() {
   const [isExpanded, setIsExpanded] = useState(false);

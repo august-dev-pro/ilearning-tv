@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import VideoCard from "@/components/videos/VideoCard";
 import { useVideos } from "@/contexts/VideosContext";
 import Suggestions from "@/components/videos/SuggestionsVideos";
-import SkeletonLoader from "@/components/ui/SkeletonLoader";
+import SkeletonLoader from "@/components/ui/skeletons/SkeletonLoader";
 import { Video } from "@/types/Video";
 import ShowMore from "@/components/ui/ShowMore";
 

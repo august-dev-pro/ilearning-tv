@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import VideoCard from "@/components/videos/VideoCard";
-import SkeletonLoader from "@/components/ui/SkeletonLoader";
+import SkeletonLoader from "@/components/ui/skeletons/SkeletonLoader";
 import { useVideos } from "@/contexts/VideosContext";
 import { useParams } from "next/navigation";
 import { Video } from "@/types/Video";
