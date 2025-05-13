@@ -1,5 +1,5 @@
 "use client";
-import VideoCard from "@/components/videos/VideoCard2";
+import VideoCard from "@/components/videos/VideoCard";
 import ShowMore from "../ui/ShowMore";
 import { useState } from "react";
 import SectionHeader from "../ui/SectionHeader";

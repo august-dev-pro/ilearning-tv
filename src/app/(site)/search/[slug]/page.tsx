@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useVideos } from "@/contexts/VideosContext";
-import VideoCard from "@/components/videos/VideoCard2";
+import VideoCard from "@/components/videos/VideoCard";
 import SkeletonLoader from "@/components/ui/SkeletonLoader";
 import Suggestions from "@/components/videos/SuggestionsVideos";
 import { Video } from "@/types/Video";

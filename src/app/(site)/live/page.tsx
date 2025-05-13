@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import VideoCard from "@/components/videos/VideoCard2";
+import VideoCard from "@/components/videos/VideoCard";
 import { useVideos } from "@/contexts/VideosContext";
 import Suggestions from "@/components/videos/SuggestionsVideos";
 import SkeletonLoader from "@/components/ui/SkeletonLoader";

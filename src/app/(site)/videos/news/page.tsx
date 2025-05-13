@@ -1,7 +1,7 @@
 "use client";
 import ShowMore from "@/components/ui/ShowMore";
 import Suggestions from "@/components/videos/SuggestionsVideos";
-import VideoCard from "@/components/videos/VideoCard2";
+import VideoCard from "@/components/videos/VideoCard";
 import { useState } from "react";
 import { useVideos } from "@/contexts/VideosContext";
 import SkeletonLoader from "@/components/ui/SkeletonLoader";

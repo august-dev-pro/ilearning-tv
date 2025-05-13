@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useVideos } from "@/contexts/VideosContext";
 import AuthorInfo from "@/components/ui/AuthorInfo";
-import VideoCard from "@/components/videos/VideoCard2";
+import VideoCard from "@/components/videos/VideoCard";
 import { Video } from "@/types/Video";
 import user from "../../../../../public/images/stephan-wahl.jpeg";
 import { FaThumbsUp } from "react-icons/fa";

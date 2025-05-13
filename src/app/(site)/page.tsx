@@ -1,6 +1,6 @@
 "use client";
 import FeaturedVideoBanner from "@/components/videos/FeaturedVideoBanner";
-import VideoCard from "@/components/videos/VideoCard2";
+import VideoCard from "@/components/videos/VideoCard";
 import banner from "../../../public/images/banner.jpg";
 import { useState } from "react";
 import ShowMore from "@/components/ui/ShowMore";
