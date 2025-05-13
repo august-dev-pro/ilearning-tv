@@ -5,20 +5,20 @@ Elle permet de parcourir, filtrer et consulter des vidéos éducatives gratuites
 
 ---
 
-## 📑 Table des matières
+## Table des matières
 
-- [✨ Fonctionnalités principales](#-fonctionnalités-principales)
-- [🧠 Gestion d’état et architecture](#-gestion-détat-et-architecture)
-- [🏗️ Choix techniques](#-choix-techniques)
-- [🚀 Installation et démarrage](#-installation-et-démarrage)
-- [📂 Structure du projet](#-structure-du-projet)
-- [📸 Captures d’écran de quelques pages](#-captures-décran-de-quelques-pages)
-- [🌍 Déploiement](#-déploiement)
-- [📞 Contact](#-contact)
+- [Fonctionnalités principales](#fonctionnalités-principales)
+- [Gestion d’état et architecture](#gestion-détat-et-architecture)
+- [Choix techniques](#choix-techniques)
+- [Installation et démarrage](#installation-et-démarrage)
+- [Structure du projet](#structure-du-projet)
+- [Captures d’écran de quelques pages](#captures-décran-de-quelques-pages)
+- [Déploiement](#déploiement)
+- [Contact](#contact)
 
 ---
 
-## ✨ Fonctionnalités principales
+## Fonctionnalités principales
 
 - Page d’accueil avec sections dynamiques :
   - Vidéos recommandées
@@ -38,9 +38,7 @@ Elle permet de parcourir, filtrer et consulter des vidéos éducatives gratuites
 - Inputs stylisés avec focus doux et transition fluide
 - Code structuré avec Next.js (App Router) et Tailwind CSS
 
----
-
-## 🧠 Gestion d’état et architecture
+## Gestion d’état et architecture
 
 Le projet utilise des Contexts React pour la gestion de l’état global :
 
@@ -50,9 +48,7 @@ Le projet utilise des Contexts React pour la gestion de l’état global :
 Les services (`videoService.ts`, `authService.ts`) sont mockés mais conçus pour facilement se connecter à un backend (fetch/axios).
 Cela permet une séparation claire entre logique d’affichage et logique métier.
 
----
-
-## 🏗️ Choix techniques
+## Choix techniques
 
 | Technologie                       | Raison du choix                                                   |
 | --------------------------------- | ----------------------------------------------------------------- |
@@ -62,7 +58,7 @@ Cela permet une séparation claire entre logique d’affichage et logique métie
 | **Lucide React**                  | Icônes SVG modernes et légères                                    |
 | **Custom fonts (Kanit, Poppins)** | Pour un look moderne et lisible                                   |
 
-## 🚀 Installation et démarrage
+## Installation et démarrage
 
 ### 1️⃣ Cloner le projet
 
@@ -91,7 +87,7 @@ yarn dev
 
 Visitez http://localhost:3000
 
-## 📂 Structure du projet
+## Structure du projet
 
     /public
       /fonts
@@ -169,7 +165,7 @@ Visitez http://localhost:3000
     tailwind.config.ts                  → Configuration Tailwind CSS
     README.md                           → Documentation du projet
 
-## 📸 Captures d’écran de quelques pages
+## Captures d’écran de quelques pages
 
 ### home page
 
@@ -191,18 +187,20 @@ Visitez http://localhost:3000
 
 ![iLearning TV Search Modael](./public/images/screenshots/iLearning%20TV%20searchModale.png)
 
-## 🌍 Déploiement
+## Déploiement
 
 Le projet est déjà déployé sur Vercel :
 ➡️ [https://ilearning-tv.vercel.app](https://ilearning-tv.vercel.app)
 
-> ℹ️ **Note** : J’avais initialement prévu d’ajouter un backend NestJS pour la gestion dynamique des vidéos et de l’authentification. Par manque de temps sur ce test, j’ai opté pour une version mockée côté front, mais l’architecture est pensée pour accueillir facilement un backend REST (NestJS ou autre) par la suite.
+> ℹ️ **Note** : J’avais initialement prévu de développer un backend avec NestJS pour gérer l’authentification, les vidéos et les utilisateurs via une API REST sécurisée.
+> Cependant, dans un souci de gestion du temps imparti, j’ai choisi de me concentrer sur la qualité du front-end, l’expérience utilisateur, et la centralisation de la logique via Context API.
+> Cela me permet de livrer un prototype cohérent, fluide et réaliste dans les délais impartis, tout en gardant une base facilement extensible vers une architecture complète si besoin.
 
 ## Ce projet est prêt à être connecté à :
 
 - Une API backend pour gérer les vidéos (Récupération dynamique)
 
-## 📞 Contact
+## Contact
 
 Projet réalisé par : **Augustin Selete**
 Pour Tambours Multimédias - Test Développeur WebTV
