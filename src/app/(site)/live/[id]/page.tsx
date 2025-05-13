@@ -55,7 +55,7 @@ export default function LivePageById() {
       <div className="container">
         <main className="mx-auto py-6 sm:py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            {/* Live Player + Description */}
+            {/* bloc du live + Description */}
             <div>
               {/* Player */}
               <div className="aspect-video bg-black lg:rounded-xl overflow-hidden shadow-lg">
@@ -68,11 +68,12 @@ export default function LivePageById() {
                 ></iframe>
               </div>
 
+              {/* Infos */}
               <div className="px-4 sm:px-0">
-                {/* Infos */}
                 <h1 className="mt-4 text-lg sm:text-xl md:text-2xl font-bold text-[#0a1b3b]">
                   {selectedLive.title}
                 </h1>
+
                 <p className="text-sm text-gray-500 mt-1">
                   En direct • {selectedLive.currentViewers} spectateurs
                 </p>
@@ -106,7 +107,7 @@ export default function LivePageById() {
             </div>
           </div>
 
-          {/* Suggestions */}
+          {/* aside des Suggestions */}
           <aside className="space-y-4 px-4 sm:px-0 lg:pl-4 border-gray-200 lg:max-h-[100vh] lg:overflow-y-auto lg:border-l custom-scroll">
             <h2 className="text-lg font-semibold text-[#0a1b3b] mb-2">
               Lives similaires

@@ -44,7 +44,7 @@ export default function Home() {
   const videosToShow = isExpanded ? videos.slice(0, 9) : videos.slice(0, 6);
   return (
     <main className="">
-      {/* Featured Video */}
+      {/* Featured Video (baniere) */}
       <section className=" py-10 ">
         <div className="container px-4 sm:px-0">
           <FeaturedVideoBanner
@@ -55,7 +55,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Recommended Videos */}
+      {/* Section : Videos recommandées */}
       <section className="section">
         <div className="container px-4 sm:px-0">
           <SectionHeader
@@ -100,7 +100,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Live Now */}
+      {/* Section : videos en live */}
       <section className="section">
         <div className="container px-4 sm:px-0">
           <SectionHeader

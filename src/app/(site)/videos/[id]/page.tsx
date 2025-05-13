@@ -42,7 +42,7 @@ export default function VideoPageById() {
     <div className="min-h-screen text-gray-800">
       <div className="container">
         <main className="mx-auto py-6 sm:py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Video */}
+          {/* bloc de lecture Video */}
           <div className="lg:col-span-2">
             <div className="aspect-video bg-black lg:rounded-xl overflow-hidden shadow-lg">
               <iframe
@@ -88,7 +88,7 @@ export default function VideoPageById() {
             </div>
           </div>
 
-          {/* Suggestions */}
+          {/* aside de Suggestions */}
           <aside className="space-y-4 px-4 sm:px-0 lg:pl-4 border-gray-200 lg:max-h-[100vh] lg:overflow-y-auto lg:border-l custom-scroll">
             {similarresVideos.length > 0 && (
               <div>

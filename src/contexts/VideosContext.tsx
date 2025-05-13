@@ -5,8 +5,8 @@ import {
   fetchVideoById,
   fetchVideosByCategory,
   fetchPopularVideos,
-  fetchRecentVideos, // Import de la fonction pour récupérer les vidéos récentes
-  fetchVideosBySearch, // Import de la fonction pour rechercher des vidéos
+  fetchRecentVideos,
+  fetchVideosBySearch,
 } from "@/services/videoService";
 import { Video } from "@/types/Video";
 
@@ -30,7 +30,7 @@ export const VideosProvider = ({ children }: { children: React.ReactNode }) => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [popularVideos, setPopularVideos] = useState<Video[]>([]);
   const [liveVideos, setLiveVideos] = useState<Video[]>([]);
-  const [recentVideos, setRecentVideos] = useState<Video[]>([]); // État pour les vidéos récentes
+  const [recentVideos, setRecentVideos] = useState<Video[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Charger toutes les vidéos
@@ -108,7 +108,7 @@ export const VideosProvider = ({ children }: { children: React.ReactNode }) => {
   // Rechercher des vidéos
   const searchVideos = async (query: string): Promise<Video[]> => {
     try {
-      return await fetchVideosBySearch(query); // Appel au service
+      return await fetchVideosBySearch(query);
     } catch (error) {
       console.error(
         `Erreur lors de la recherche des vidéos avec le terme "${query}" :`,
@@ -123,7 +123,7 @@ export const VideosProvider = ({ children }: { children: React.ReactNode }) => {
     loadAllVideos();
     loadPopularVideos();
     loadLiveVideos();
-    loadRecentVideos(); // Charger les vidéos récentes
+    loadRecentVideos();
   }, []);
 
   return (
@@ -132,14 +132,14 @@ export const VideosProvider = ({ children }: { children: React.ReactNode }) => {
         videos,
         popularVideos,
         liveVideos,
-        recentVideos, // Ajouter les vidéos récentes au contexte
+        recentVideos,
         getVideoById,
         getVideosByCategory,
         loadAllVideos,
         loadLiveVideos,
-        loadRecentVideos, // Ajouter la fonction pour recharger les vidéos récentes
+        loadRecentVideos,
         isLoading,
-        searchVideos, // Ajouter la fonction de recherche au contexte
+        searchVideos,
       }}
     >
       {children}
