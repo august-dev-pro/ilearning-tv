@@ -10,6 +10,7 @@ import { FaThumbsUp } from "react-icons/fa";
 import { FiChevronRight, FiMessageCircle } from "react-icons/fi";
 import { Video } from "@/types/Video";
 import PlayVideoPageSkeleton from "@/components/ui/skeletons/PlayVideoPageSkeleton";
+import VideoPlayer from "@/components/ui/VideoPlayer";
 
 export default function VideoPageById() {
   const params = useParams();
@@ -44,14 +45,8 @@ export default function VideoPageById() {
         <main className="mx-auto py-6 sm:py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* bloc de lecture Video */}
           <div className="lg:col-span-2">
-            <div className="aspect-video bg-black lg:rounded-xl overflow-hidden shadow-lg">
-              <iframe
-                className="w-full h-full"
-                src={selectedVideo.videoUrl}
-                title="Vidéo"
-                frameBorder="0"
-                allowFullScreen
-              ></iframe>
+            <div className="aspect-video lg:rounded-xl overflow-hidden shadow-lg">
+              <VideoPlayer video={selectedVideo} />
             </div>
 
             <div className="px-4 sm:px-0">

@@ -10,6 +10,7 @@ import user from "../../../../../public/images/stephan-wahl.jpeg";
 import { FaThumbsUp } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import PlayVideoPageSkeleton from "@/components/ui/skeletons/PlayVideoPageSkeleton";
+import VideoPlayer from "@/components/ui/VideoPlayer";
 
 export default function LivePageById() {
   const params = useParams();
@@ -59,13 +60,7 @@ export default function LivePageById() {
             <div>
               {/* Player */}
               <div className="aspect-video bg-black lg:rounded-xl overflow-hidden shadow-lg">
-                <iframe
-                  className="w-full h-full"
-                  src={selectedLive?.videoUrl}
-                  title="Live Vidéo"
-                  frameBorder="0"
-                  allowFullScreen
-                ></iframe>
+                <VideoPlayer video={selectedLive} />
               </div>
 
               {/* Infos */}
