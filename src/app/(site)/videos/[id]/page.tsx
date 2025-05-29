@@ -61,7 +61,7 @@ export default function VideoPageById() {
 
               <AuthorInfo
                 teacherImage={user.src}
-                author={selectedVideo.author.name}
+                author={selectedVideo.channel.name}
                 certified
               />
 
