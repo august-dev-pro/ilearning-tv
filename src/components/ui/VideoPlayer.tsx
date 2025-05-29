@@ -11,7 +11,7 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
-  video,
+  // video,
   controls = true,
   width = "100%",
   height = "100%",
