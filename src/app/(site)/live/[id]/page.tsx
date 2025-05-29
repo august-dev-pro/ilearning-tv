@@ -75,7 +75,7 @@ export default function LivePageById() {
 
                 <AuthorInfo
                   teacherImage={user.src}
-                  author={selectedLive.authorId}
+                  author={selectedLive.channel.name}
                   certified={true}
                 />
 
