@@ -5,8 +5,15 @@ export type Category = {
   name: string;
   videos: BackendVideo[];
 };
+export type CategoryBackend = {
+  id: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+  videos: BackendVideo[];
+};
 
-export function mapBackendCategoryToCategory(data: any): Category {
+export function mapBackendCategoryToCategory(data: CategoryBackend): Category {
   return {
     id: data?.id ?? "",
     name: data?.name ?? "",

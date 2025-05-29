@@ -112,7 +112,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       await registerApi(data);
       setAuthError(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       if (err instanceof Error) {
         setAuthError(err.message || "Erreur lors de l'inscription");
         throw err;
