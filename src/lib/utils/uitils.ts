@@ -34,13 +34,13 @@ export function mapBackendVideoToVideo(data: BackendVideo): Video {
   };
 }
 
-export function formatRelativeDate(dateString: string) {
+export function formatRelativeDate(dateString: Date) {
   return formatDistanceToNow(new Date(dateString), {
     addSuffix: true,
     locale: fr,
   });
 }
 
-export function formatExactDate(dateString: string) {
+export function formatExactDate(dateString: Date) {
   return format(new Date(dateString), "dd MMM yyyy", { locale: fr });
 }

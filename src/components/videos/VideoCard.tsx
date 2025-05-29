@@ -179,7 +179,7 @@ export default function VideoCard({
                   <span>·</span>
                   <span className="w-max">
                     {/* <span className="">il y a</span> */}
-                    {formatRelativeDate(video.publishedAt)}
+                    {formatRelativeDate(video.publishedAt || new Date())}
                   </span>
                 </div>
               </div>
@@ -199,7 +199,7 @@ export default function VideoCard({
                 <span>·</span>
                 <span className="flex flex-row gap-1 w-max">
                   {/* <span className="hidden sm:!flex">publié le</span> */}
-                  {formatRelativeDate(video.publishedAt)}
+                  {formatRelativeDate(video.publishedAt || new Date())}
                 </span>
               </div>
             </div>
