@@ -1,3 +1,4 @@
+import { API_URL } from "@/lib/api";
 import { Video } from "@/types/Video";
 import React from "react";
 import ReactPlayer from "react-player";
@@ -18,7 +19,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   light = false,
 }) => (
   <ReactPlayer
-    url={`http://127.0.0.1:3900${video.videoUrl}`}
+    url={`/videos/teste.mp4`}
     controls={controls}
     width={width}
     height={height}
