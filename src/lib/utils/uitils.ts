@@ -1,5 +1,4 @@
-import { Video, VideoTypeEnum } from "@/types/Video";
-// utils/date.ts
+import { BackendVideo, Video, VideoTypeEnum } from "@/types/Video";
 import { formatDistanceToNow, format } from "date-fns";
 import { fr } from "date-fns/locale";
 
@@ -7,7 +6,7 @@ export function cn(...classes: (string | undefined | false | null)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function mapBackendVideoToVideo(data: any): Video {
+export function mapBackendVideoToVideo(data: BackendVideo): Video {
   return {
     id: data.id,
     title: data.title,
@@ -15,7 +14,7 @@ export function mapBackendVideoToVideo(data: any): Video {
     videoUrl: data.fileUrl.replace(/\\/g, "/"),
     thumbnail: {
       id: data.thumbnail?.id,
-      url: data.thumbnail?.url.replace(/\\/g, "/"),
+      url: data.thumbnail?.url.replace(/\\/g, "/") || "",
     },
     category: {
       id: data.category?.id,
@@ -24,13 +23,13 @@ export function mapBackendVideoToVideo(data: any): Video {
     channel: {
       id: data.channel?.id,
       name: data.channel?.name,
-      image: data.channel?.image || null,
+      image: data.channel?.image || undefined,
     },
     views: data.views ?? 0,
     likes: data.likes ?? 0,
     videoType: data.videoType as VideoTypeEnum,
     currentViewers: data.liveViewers ? data.liveViewers : undefined,
-    publishedAt: data.createdAt,
+    publishedAt: data.createdAt ?? data.createdAt,
     comments: data.comments ?? 0,
   };
 }

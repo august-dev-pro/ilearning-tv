@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import {
   AuthTokens,
+  JwtPayload,
   login as loginApi,
   logout as logoutApi,
   register as registerApi,
@@ -19,6 +20,7 @@ interface AuthContextProps {
     password: string;
   }) => Promise<void>;
   authError: string | null;
+  authTokens: AuthTokens | null;
 }
 
 const AuthContext = createContext<AuthContextProps | null>(null);
@@ -37,7 +39,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         refreshToken: localStorage.getItem("refreshToken") || "",
       });
       try {
-        const decoded: any = jwtDecode(accessToken);
+        const decoded = jwtDecode<JwtPayload>(accessToken);
         console.log("decoded token data: ", decoded);
 
         setUser({
@@ -66,7 +68,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setAuthTokens(tokens);
       localStorage.setItem("accessToken", tokens.accessToken);
       localStorage.setItem("refreshToken", tokens.refreshToken);
-      const decoded: any = jwtDecode(tokens.accessToken);
+      const decoded = jwtDecode<JwtPayload>(tokens.accessToken);
       setUser({
         id: decoded.sub,
         email: decoded.email,
@@ -80,9 +82,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         videosPubliees: 0,
         pays: "",
       });
-    } catch (err: any) {
-      setAuthError(err.message || "Erreur inconnue");
-      throw err;
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setAuthError(err.message || "Erreur lorrs de la connexion");
+        throw err;
+      }
+      setAuthError("Erreur inconnue");
+      throw new Error("Erreur inconnue");
     }
   };
 
@@ -107,13 +113,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await registerApi(data);
       setAuthError(null);
     } catch (err: any) {
-      setAuthError(err.message || "Erreur lors de l'inscription");
-      throw err;
+      if (err instanceof Error) {
+        setAuthError(err.message || "Erreur lors de l'inscription");
+        throw err;
+      }
+      setAuthError("Erreur inconnue");
+      throw new Error("Erreur inconnue");
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, authError }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, register, authError, authTokens }}
+    >
       {children}
     </AuthContext.Provider>
   );

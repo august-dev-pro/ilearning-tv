@@ -1,4 +1,4 @@
-import { Video } from "@/types/Video";
+import { BackendVideo, Video } from "@/types/Video";
 import { mapBackendVideoToVideo } from "@/lib/utils/uitils";
 import { API_URL } from "@/lib/api";
 
@@ -38,7 +38,8 @@ export const fetchVideosByCategory = async (
   if (Array.isArray(json.data)) {
     return json.data
       .filter(
-        (v: any) => v.category?.name?.toLowerCase() === category.toLowerCase()
+        (v: BackendVideo) =>
+          v.category?.name?.toLowerCase() === category.toLowerCase()
       )
       .map(mapBackendVideoToVideo);
   }
@@ -90,10 +91,11 @@ export const fetchPopularVideos = async (): Promise<Video[]> => {
 // Récupérer les vidéos récentes (à trier côté front si pas d'endpoint dédié)
 export const fetchRecentVideos = async (): Promise<Video[]> => {
   const videos = await fetchAllVideos();
-  return videos.sort(
-    (a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  );
+  return videos.sort((a, b) => {
+    const dateA = new Date(a.publishedAt ?? 0); // 0 = 1970-01-01
+    const dateB = new Date(b.publishedAt ?? 0);
+    return dateB.getTime() - dateA.getTime();
+  });
 };
 
 // Rechercher des vidéos par mot-clé (à filtrer côté front si pas d'endpoint dédié)

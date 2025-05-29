@@ -2,7 +2,6 @@
 import "swiper/css";
 import FeaturedVideoBanner from "@/components/videos/FeaturedVideoBanner";
 import VideoCard from "@/components/videos/VideoCard";
-import banner from "../../../public/images/banner.jpg";
 import { useState } from "react";
 import ShowMore from "@/components/ui/ShowMore";
 import SectionHeader from "@/components/ui/SectionHeader";

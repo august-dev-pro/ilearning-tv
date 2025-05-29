@@ -1,7 +1,9 @@
+import { BackendVideo } from "./Video";
+
 export type Category = {
   id: string;
   name: string;
-  videos: any[];
+  videos: BackendVideo[];
 };
 
 export function mapBackendCategoryToCategory(data: any): Category {
