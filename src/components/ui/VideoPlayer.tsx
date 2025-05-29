@@ -1,4 +1,3 @@
-import { API_URL } from "@/lib/api";
 import { Video } from "@/types/Video";
 import React from "react";
 import ReactPlayer from "react-player";
