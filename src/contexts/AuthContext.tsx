@@ -1,31 +1,101 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 import {
-  login as fakeLogin,
-  register as fakeRegister,
+  AuthTokens,
+  login as loginApi,
+  logout as logoutApi,
+  register as registerApi,
 } from "@/services/authService";
 import { User } from "@/types/User";
 
 interface AuthContextProps {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   register: (data: {
     email: string;
     name: string;
     password: string;
   }) => Promise<void>;
+  authError: string | null;
 }
 
 const AuthContext = createContext<AuthContextProps | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [authTokens, setAuthTokens] = useState<AuthTokens | null>(null);
+  const [authError, setAuthError] = useState<string | null>(null);
+
+  // Charger le token au démarrage
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      setAuthTokens({
+        accessToken,
+        refreshToken: localStorage.getItem("refreshToken") || "",
+      });
+      try {
+        const decoded: any = jwtDecode(accessToken);
+        console.log("decoded token data: ", decoded);
+
+        setUser({
+          id: decoded.sub,
+          email: decoded.email,
+          nom: decoded.nom || "",
+          prenom: decoded.prenom || "",
+          nomDeChaine: decoded.nomDeChaine || "",
+          nombreDAbonnes: 0,
+          avatarUrl: "",
+          description: "",
+          dateInscription: "",
+          videosPubliees: 0,
+          pays: "",
+        });
+      } catch {
+        setUser(null);
+      }
+    }
+  }, []);
 
   const login = async (email: string, password: string) => {
-    const loggedInUser = await fakeLogin(email, password);
-    if (loggedInUser) setUser(loggedInUser);
-    else throw new Error(`indentifiants incorrects`);
+    setAuthError(null);
+    try {
+      const tokens = await loginApi(email, password);
+      setAuthTokens(tokens);
+      localStorage.setItem("accessToken", tokens.accessToken);
+      localStorage.setItem("refreshToken", tokens.refreshToken);
+      const decoded: any = jwtDecode(tokens.accessToken);
+      setUser({
+        id: decoded.sub,
+        email: decoded.email,
+        nom: decoded.nom || "",
+        prenom: decoded.prenom || "",
+        nomDeChaine: decoded.nomDeChaine || "",
+        nombreDAbonnes: 0,
+        avatarUrl: "",
+        description: "",
+        dateInscription: "",
+        videosPubliees: 0,
+        pays: "",
+      });
+    } catch (err: any) {
+      setAuthError(err.message || "Erreur inconnue");
+      throw err;
+    }
+  };
+
+  const logout = async () => {
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (!refreshToken) {
+      return;
+    }
+    await logoutApi(refreshToken);
+    setUser(null);
+    setAuthTokens(null);
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
   };
 
   const register = async (data: {
@@ -33,14 +103,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     name: string;
     password: string;
   }) => {
-    const newUser = await fakeRegister(data);
-    setUser(newUser);
+    try {
+      await registerApi(data);
+      setAuthError(null);
+    } catch (err: any) {
+      setAuthError(err.message || "Erreur lors de l'inscription");
+      throw err;
+    }
   };
 
-  const logout = () => setUser(null);
-
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, login, logout, register, authError }}>
       {children}
     </AuthContext.Provider>
   );

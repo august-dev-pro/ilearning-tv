@@ -6,6 +6,8 @@ import PlayButton from "../ui/PlayButton";
 import { MdWhatshot, MdWifiTethering } from "react-icons/md";
 import CertifiedBadge from "../ui/CertifiedBadge";
 import { Video } from "@/types/Video";
+import { formatRelativeDate } from "@/lib/utils/uitils";
+import { API_URL } from "@/lib/api";
 
 type VideoCardProps = {
   key: string;
@@ -24,6 +26,8 @@ export default function VideoCard({
   const isNormal = type === "normal";
   const description = video.description;
 
+  // console.log("video: ", video);
+
   return (
     <article
       className={`bg-white cursor-pointer transition duration-300
@@ -33,7 +37,7 @@ export default function VideoCard({
     >
       {/* Thumbnail */}
       <div
-        className={`relative  md:h-[210px] group rounded-xl overflow-hidden transition-all duration-300 border-2 border-transparent hover:border-red-600 ${
+        className={`relative  md:h-[210px] group rounded-xl overflow-hidden transition-all duration-300 border-2 border-gray-200 hover:border-red-600 ${
           (isTrend || isLive) && !isMiniatureSugession
             ? "h-[115px] w-1/2 sm:w-1/3 max-h-[90px] sm:max-h-[100px] md:max-h-40"
             : "h-[200px] w-full"
@@ -51,23 +55,25 @@ export default function VideoCard({
           href={`${isLive ? `/live/${video.id}` : `/videos/${video.id}`}`}
           className=" "
         >
-          {/*  {<Image
-            src={ video.thumbnail ||  banner.src}
-            width={500}
-            height={500}
-            alt={video.title}
-            className={`object-cover h-full w-full ${
-              isTrend || isLive ? "  rounded-l-xl" : "w-full h-40"
-            }`}
-          />} */}
+          {
+            <Image
+              src={`${API_URL}${video.thumbnail.url}`}
+              width={500}
+              height={500}
+              alt={video.title}
+              className={`object-cover h-full w-full ${
+                isTrend || isLive ? "  rounded-l-xl" : "w-full h-40"
+              }`}
+            />
+          }
 
-          <iframe
+          {/* <iframe
             className="w-full h-full"
             src={video.videoUrl}
             title="Vidéo"
             frameBorder="0"
             allowFullScreen
-          ></iframe>
+          ></iframe> */}
         </Link>
 
         {/* LIVE or TREND Badge */}
@@ -84,10 +90,10 @@ export default function VideoCard({
           </div>
         )}
         {/* Teacher Image (Avatar) */}
-        {(isTrend || isLive) && video.teacherImage && (
+        {(isTrend || isLive) && (
           <div className="absolute bottom-2 right-2 flex items-center gap-1">
             <span className="text-[10px] font-[400] sm:text-xs text-white sm:font-bold text-shadow">
-              {video.authorId}
+              {video.channel.name}
             </span>
 
             <Image
@@ -136,7 +142,7 @@ export default function VideoCard({
             isNormal ? "" : "md:flex-col md:items-start md:gap-1"
           }`}
         >
-          {isNormal && video.teacherImage ? (
+          {isNormal ? (
             <div className="flex items-start gap-2">
               <Image
                 src={/* video.teacherImage || */ teacherImage.src}
@@ -164,7 +170,7 @@ export default function VideoCard({
                   </div>
                 </Link>
                 <p className="text-xs text-gray-500 flex items-center gap-1">
-                  {video.authorId}
+                  {video.channel.name}
                   <CertifiedBadge />
                 </p>
 
@@ -172,8 +178,8 @@ export default function VideoCard({
                   <span>{video.views}k vues</span>
                   <span>·</span>
                   <span className="w-max">
-                    <span className="">il y a</span>
-                    {video.publishedAt}
+                    {/* <span className="">il y a</span> */}
+                    {formatRelativeDate(video.publishedAt)}
                   </span>
                 </div>
               </div>
@@ -185,15 +191,15 @@ export default function VideoCard({
           ) : isTrend ? (
             <div className="flex flex-col gap-1 sm:gap-2">
               <div className="text-xs text-gray-500 flex items-center gap-1">
-                {video.authorId}
+                {video.channel.name}
                 <CertifiedBadge />
               </div>
               <div className="flex items-center text-[11px] text-gray-400 space-x-2 ">
                 <span className="w-max">{video.views}k vues</span>
                 <span>·</span>
                 <span className="flex flex-row gap-1 w-max">
-                  <span className="hidden sm:!flex">publié le</span>
-                  {video.publishedAt}
+                  {/* <span className="hidden sm:!flex">publié le</span> */}
+                  {formatRelativeDate(video.publishedAt)}
                 </span>
               </div>
             </div>

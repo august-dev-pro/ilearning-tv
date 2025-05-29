@@ -1,6 +1,8 @@
 import Header from "@/components/navigation/header/Header";
 import Footer from "@/components/navigation/footer/Footer";
 import { VideosProvider } from "@/contexts/VideosContext";
+import { CategoryProvider } from "@/contexts/CategoryContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export default async function RootLayout({
   children,
@@ -9,11 +11,15 @@ export default async function RootLayout({
 }>) {
   return (
     <main>
-      <VideosProvider>
-        <Header />
-        {children}
-        <Footer />
-      </VideosProvider>
+      <AuthProvider>
+        <CategoryProvider>
+          <VideosProvider>
+            <Header />
+            {children}
+            <Footer />
+          </VideosProvider>
+        </CategoryProvider>
+      </AuthProvider>
     </main>
   );
 }

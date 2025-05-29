@@ -196,9 +196,29 @@ Le projet est déjà déployé sur Vercel :
 > Cependant, dans un souci de gestion du temps imparti, j’ai choisi de me concentrer sur la qualité du front-end, l’expérience utilisateur, et la centralisation de la logique via Context API.
 > Cela me permet de livrer un prototype cohérent, fluide et réaliste dans les délais impartis, tout en gardant une base facilement extensible vers une architecture complète si besoin.
 
-## Ce projet est prêt à être connecté à :
+---
 
-- Une API backend pour gérer les vidéos (Récupération dynamique)
+## Connexion complète au backend
+
+Depuis la dernière mise à jour, **iLearning TV est désormais entièrement connecté à son backend NestJS/Prisma** :
+
+- **Connexion API REST** : toutes les vidéos, catégories, utilisateurs, likes, commentaires, etc. sont récupérés dynamiquement depuis l’API backend.
+- **Authentification JWT réelle** : login, logout, gestion des tokens (stockage sécurisé, décodage JWT côté front), redirection automatique après connexion.
+- **Gestion dynamique des catégories** : seules les catégories contenant des vidéos sont affichées, récupération en temps réel depuis l’API.
+- **Slider de vidéos vedettes** : carrousel interactif alimenté par les vidéos du backend.
+- **Dates UX-friendly** : affichage “il y a X jours/heures” avec date-fns.
+- **Overlay de chargement professionnel** : blocage de l’UI et spinner lors des actions critiques (login…).
+- **Gestion centralisée des erreurs** : toutes les erreurs importantes sont gérées dans les Contexts et affichées proprement.
+- **Header dynamique** : affichage de l’avatar ou icône utilisateur connecté, bouton déconnexion.
+
+### Backend utilisé
+
+Le projet front est connecté à :
+➡️ [https://ilearningtv-backend.onrender.com](https://ilearningtv-backend.onrender.com)
+
+Voir le [README du backend](../ilearningtv-backend/README.md) pour plus de détails sur l’API, la structure et le déploiement.
+
+---
 
 ## Contact
 

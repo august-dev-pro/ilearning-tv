@@ -39,6 +39,8 @@ export default function VideoPageById() {
       video.category === selectedVideo.category && video.id !== selectedVideo.id
   );
 
+  console.log("selected deo: ", selectedVideo);
+
   return (
     <div className="min-h-screen text-gray-800">
       <div className="container">
@@ -59,7 +61,7 @@ export default function VideoPageById() {
 
               <AuthorInfo
                 teacherImage={user.src}
-                author={selectedVideo.authorId}
+                author={selectedVideo.author.name}
                 certified
               />
 

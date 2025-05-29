@@ -4,39 +4,46 @@ import SocialLoginButtons from "@/components/ui/SocialLoginButtons";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
-  const { login } = useAuth();
+  const { login, authError } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
+  const router = useRouter();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
     try {
       await login(email, password);
-    } catch (err) {
-      setError(
-        `Échec de la connexion. Veuillez vérifier vos identifiants: ${err}`
-      );
+      setEmail("");
+      setPassword("");
+      router.push("/");
+    } catch {
+      // L'erreur est déjà gérée dans le contexte
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      <div className="flex items-center">
+    <div className="relative min-h-screen flex items-center">
+      {/* Overlay de chargement */}
+      {loading && (
+        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-gray-500/10 bg-opacity-70 backdrop-blur-sm "></div>
+      )}
+      <div className="flex items-center ">
         <div className="container px-4 sm:px-0 grid items-center justify-center gap-6 md:gap-10">
           <div className="max-w-md xl:min-w-md m-[0_auto] w-full bg-white border border-gray-200 md:border-gray-100 rounded-2xl shadow-lg p-5 sm:p-8 space-y-6">
             <h1 className="mb-6 text-xl md:text-2xl font-[900] text-black text-center border-gray-300 border-b pb-4">
               Connectez-vous
             </h1>
-            {error && (
-              <div className="text-red-500 text-sm text-center">{error}</div>
+            {authError && (
+              <div className="flex items-center justify-center bg-red-50 border border-red-200 text-red-700 rounded-lg py-2 px-3 mb-2 text-sm">
+                <span className="material-icons mr-2">error_outline</span>
+                {authError}
+              </div>
             )}
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div>

@@ -1,7 +1,7 @@
 import React from "react";
 import PlayButton from "../ui/PlayButton";
 import { BiStar } from "react-icons/bi";
-
+import image from "../../../public/images/banner.jpg";
 type FeaturedVideoBannerProps = {
   title: string;
   thumbnail: string;
@@ -11,11 +11,12 @@ const FeaturedVideoBanner: React.FC<FeaturedVideoBannerProps> = ({
   title,
   thumbnail,
 }) => {
+  // url(http://127.0.0.1:3900${thumbnail})
   return (
     <div
       className="relative w-full rounded-xl overflow-hidden h-64 sm:h-72 md:h-80 lg:h-95 xl:h-[400px] bg-gray-900 text-white"
       style={{
-        backgroundImage: `url(${thumbnail})`,
+        backgroundImage: `url(${image.src})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

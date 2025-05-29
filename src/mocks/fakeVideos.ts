@@ -1,4 +1,4 @@
-import { Video } from "@/types/Video";
+/* import { Video } from "@/types/Video";
 
 export const fakeVideos: Video[] = [
   {
@@ -444,3 +444,4 @@ export const fakeVideos: Video[] = [
     publishedAt: "2025-05-11",
   },
 ];
+ */

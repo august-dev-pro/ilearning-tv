@@ -16,6 +16,8 @@ import { HiOutlineChevronDown, HiOutlineChevronRight } from "react-icons/hi";
 import { GoTriangleUp } from "react-icons/go";
 import { usePathname } from "next/navigation";
 import SearchModal from "@/components/ui/SearchModal";
+import { useAuth } from "@/contexts/AuthContext";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function Header() {
   const [isScroll, setIsScroll] = useState(false);
@@ -24,7 +26,7 @@ export default function Header() {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
   const path = usePathname();
-
+  const { user, logout } = useAuth();
   const navLinks = [
     { label: "Accueil", href: "/", icon: <FiHome /> },
     {
@@ -166,14 +168,24 @@ export default function Header() {
                   onClick={() => setIsSearchModalOpen(true)}
                 />
               </nav>
-              <Link
-                href="/login"
-                className="xl:ml-4 w-max bg-white text-[#0a1b3b] font-semibold px-4 py-2 rounded-lg text-sm hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-300 hover:shadow-md hover:scale-105
-    transition-all duration-300 ease-in-out
-    focus:outline-none focus:ring-2 focus:ring-[#0a1b3bcc]"
-              >
-                Se connecter
-              </Link>
+              {user ? (
+                <button
+                  className="flex cursor-pointer items-center p-[6px] rounded-full border border-blue-400 bg-white text-[#0a1b3b] hover:bg-blue-50 transition"
+                  title="Mon compte"
+                  onClick={logout}
+                >
+                  <FaUserCircle size={22} className="text-blue-400" />
+                </button>
+              ) : (
+                <Link
+                  href="/login"
+                  className="xl:ml-4 w-max bg-white text-[#0a1b3b] font-semibold px-4 py-2 rounded-lg text-sm hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-300 hover:shadow-md hover:scale-105
+        transition-all duration-300 ease-in-out
+        focus:outline-none focus:ring-2 focus:ring-[#0a1b3bcc]"
+                >
+                  Se connecter
+                </Link>
+              )}
             </div>
 
             {/* Mobile Hamburger */}

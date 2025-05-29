@@ -1,16 +1,36 @@
+export enum VideoTypeEnum {
+  STANDARD = "STANDARD",
+  LIVE = "LIVE",
+  TREND = "TREND",
+}
+
 export type Video = {
   id: string;
   title: string;
-  category: string;
   description: string;
-  thumbnail: string;
   videoUrl: string;
-  teacherImage: string;
-  authorId: string;
+  thumbnail: {
+    id?: string;
+    url: string;
+  };
+  category: {
+    id?: string;
+    name: string;
+  };
+  channel: {
+    id: string;
+    name: string;
+    image?: string;
+  };
   views?: number;
   likes?: number;
-  isLive?: true;
-  currentViewers?: number;
+  videoType: VideoTypeEnum;
+  currentViewers?: number | undefined;
   publishedAt: string;
-  comment?: number;
+  comments?: number;
+};
+
+export type Category = {
+  id: string;
+  name: string;
 };

@@ -7,6 +7,8 @@ import {
   fetchPopularVideos,
   fetchRecentVideos,
   fetchVideosBySearch,
+  fetchLiveVideos,
+  fetchTrendingVideos,
 } from "@/services/videoService";
 import { Video } from "@/types/Video";
 
@@ -14,11 +16,13 @@ interface VideosContextProps {
   videos: Video[];
   popularVideos: Video[];
   liveVideos: Video[];
+  trendingVideos: Video[];
   recentVideos: Video[];
   getVideoById: (id: string) => Promise<Video | null>;
   getVideosByCategory: (category: string) => Promise<Video[]>;
   loadAllVideos: () => Promise<void>;
   loadLiveVideos: () => Promise<void>;
+  loadTrendVideos: () => Promise<void>;
   loadRecentVideos: () => Promise<void>;
   isLoading: boolean;
   searchVideos: (query: string) => Promise<Video[]>;
@@ -30,6 +34,7 @@ export const VideosProvider = ({ children }: { children: React.ReactNode }) => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [popularVideos, setPopularVideos] = useState<Video[]>([]);
   const [liveVideos, setLiveVideos] = useState<Video[]>([]);
+  const [trendingVideos, setTrendingVideos] = useState<Video[]>([]);
   const [recentVideos, setRecentVideos] = useState<Video[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -59,11 +64,22 @@ export const VideosProvider = ({ children }: { children: React.ReactNode }) => {
   // Charger les vidéos en direct
   const loadLiveVideos = async () => {
     try {
-      const allVideos = await fetchAllVideos();
-      const lives = allVideos.filter((video) => video.isLive);
+      const lives = await fetchLiveVideos();
       setLiveVideos(lives);
     } catch (error) {
       console.error("Erreur lors du chargement des vidéos en direct :", error);
+    }
+  };
+  // Charger les vidéos en tendances
+  const loadTrendVideos = async () => {
+    try {
+      const trends = await fetchTrendingVideos();
+      setTrendingVideos(trends);
+    } catch (error) {
+      console.error(
+        "Erreur lors du chargement des vidéos en tendances :",
+        error
+      );
     }
   };
 
@@ -124,6 +140,7 @@ export const VideosProvider = ({ children }: { children: React.ReactNode }) => {
     loadPopularVideos();
     loadLiveVideos();
     loadRecentVideos();
+    loadTrendVideos();
   }, []);
 
   return (
@@ -132,11 +149,13 @@ export const VideosProvider = ({ children }: { children: React.ReactNode }) => {
         videos,
         popularVideos,
         liveVideos,
+        trendingVideos,
         recentVideos,
         getVideoById,
         getVideosByCategory,
         loadAllVideos,
         loadLiveVideos,
+        loadTrendVideos,
         loadRecentVideos,
         isLoading,
         searchVideos,

@@ -11,14 +11,14 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
-  //   url,
+  video,
   controls = true,
   width = "100%",
   height = "100%",
   light = false,
 }) => (
   <ReactPlayer
-    url={"/videos/Comment télécharger et installer Python sur Windows 10.mp4"}
+    url={`http://127.0.0.1:3900${video.videoUrl}`}
     controls={controls}
     width={width}
     height={height}

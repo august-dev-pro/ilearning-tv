@@ -1,28 +1,39 @@
+import { API_URL } from "@/lib/api";
 import { User } from "@/types/User";
+
+const PROD_API_AUTH_URL = `${API_URL}/auth`;
+// const API_URL = "http://127.0.0.1:3900/auth";
+
+export type AuthTokens = {
+  accessToken: string;
+  refreshToken: string;
+};
 
 export async function login(
   email: string,
   password: string
-): Promise<User | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  if (email === "test@example.com" && password === "password") {
+): Promise<AuthTokens> {
+  const res = await fetch(`${PROD_API_AUTH_URL}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+  if (!res.ok) throw new Error("Erreur de connexion");
+  const json = await res.json();
+  if (json.data?.accessToken && json.data?.refreshToken) {
     return {
-      id: "1",
-      nom: "Doe",
-      prenom: "John",
-      nomDeChaine: "JohnDoeTV",
-      nombreDAbonnes: 1000,
-      email,
-      avatarUrl: "https://example.com/avatar.jpg",
-      description: "Chaîne de démonstration",
-      dateInscription: "2023-01-01",
-      videosPubliees: 10,
-      pays: "France",
+      accessToken: json.data.accessToken,
+      refreshToken: json.data.refreshToken,
     };
   }
-
-  return null;
+  throw new Error("Identifiants invalides ou réponse inattendue");
+}
+export async function logout(refreshToken: string): Promise<void> {
+  const res = await fetch(`${PROD_API_AUTH_URL}/logout`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ refreshToken }),
+  });
 }
 
 export async function register(data: {

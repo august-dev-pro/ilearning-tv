@@ -1,4 +1,5 @@
 "use client";
+import "swiper/css";
 import FeaturedVideoBanner from "@/components/videos/FeaturedVideoBanner";
 import VideoCard from "@/components/videos/VideoCard";
 import banner from "../../../public/images/banner.jpg";
@@ -9,49 +10,59 @@ import { Tab } from "@headlessui/react";
 import { useVideos } from "@/contexts/VideosContext";
 import { Video } from "@/types/Video";
 import HomeSkeleton from "@/components/ui/skeletons/HomeSkeleton";
+import { useCategories } from "@/contexts/CategoryContext";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
 export default function Home() {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpandedRecommended, setIsExpandedRecommended] = useState(false);
+  const [isExpandedLive, setIsExpandedLive] = useState(false);
+  const [isExpandedTrending, setIsExpandedTrending] = useState(false);
+  const [isExpandedNews, setIsExpandedNews] = useState(false);
   const [selectedCat, setSelectedCat] = useState("all");
 
-  const handleToggle = () => {
-    setIsExpanded((prev) => !prev);
-  };
+  const { liveVideos, videos, trendingVideos, isLoading } = useVideos();
+  const { categories, isCatLoading } = useCategories();
 
-  const { liveVideos, videos, isLoading } = useVideos();
-
-  if (isLoading) {
+  if (isLoading || isCatLoading) {
     return <HomeSkeleton />;
   }
 
   const groupedVideos = {
     Tous: videos,
-    Mathématiques: videos.filter((v) => v.category === "Mathématiques"),
-    Astronomie: videos.filter((v) => v.category === "Astronomie"),
-    Technologie: videos.filter((v) => v.category === "Technologie"),
-    Physique: videos.filter((v) => v.category === "Physique"),
-    Géographie: videos.filter((v) => v.category === "Géographie"),
-    Biologie: videos.filter((v) => v.category === "Biologie"),
-    Civisme: videos.filter((v) => v.category === "Civisme"),
-    Économie: videos.filter((v) => v.category === "Économie"),
-    Santé: videos.filter((v) => v.category === "Santé"),
-    Environnement: videos.filter((v) => v.category === "Environnement"),
-    Informatique: videos.filter((v) => v.category === "Informatique"),
-    Histoire: videos.filter((v) => v.category === "Histoire"),
-    Méthodologie: videos.filter((v) => v.category === "Méthodologie"),
+    ...Object.fromEntries(
+      categories.map((cat) => [
+        cat.name,
+        videos.filter((v) => v.category.name === cat.name),
+      ])
+    ),
   };
 
-  const videosToShow = isExpanded ? videos.slice(0, 9) : videos.slice(0, 6);
+  const videosToShow = isExpandedNews ? videos.slice(0, 9) : videos.slice(0, 6);
   return (
     <main className="">
       {/* Featured Video (baniere) */}
       <section className=" py-10 ">
         <div className="container px-4 sm:px-0">
-          <FeaturedVideoBanner
-            thumbnail={banner.src}
-            title="Apprendre Next.js en 10 étapes"
-            key={""}
-          />
+          <Swiper
+            slidesPerView={1}
+            loop
+            autoplay={{ delay: 8000, disableOnInteraction: false }}
+            pagination={{ clickable: true }}
+            navigation
+            modules={[Autoplay, Pagination, Navigation]}
+            style={{ borderRadius: 12, overflow: "hidden" }}
+          >
+            {videos.slice(10, 14).map((video) => (
+              <SwiperSlide key={video.id}>
+                <FeaturedVideoBanner
+                  thumbnail={video.thumbnail.url}
+                  title={video.title}
+                  key={""}
+                />{" "}
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </section>
 
@@ -86,7 +97,7 @@ export default function Home() {
                 <Tab.Panel key={idx}>
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {videos
-                      .slice(0, isExpanded ? videos.length : 6)
+                      .slice(0, isExpandedRecommended ? videos.length : 6)
                       .map((video) => (
                         <VideoCard key={video.id} video={video} type="normal" />
                       ))}
@@ -96,7 +107,10 @@ export default function Home() {
             </Tab.Panels>
           </Tab.Group>
 
-          <ShowMore isExpanded={isExpanded} onToggle={handleToggle} />
+          <ShowMore
+            isExpanded={isExpandedRecommended}
+            onToggle={() => setIsExpandedRecommended((prev) => !prev)}
+          />
         </div>
       </section>
 
@@ -109,11 +123,16 @@ export default function Home() {
             placeholder="Tous Les Lives"
           />
           <div className="grid gap-4">
-            {liveVideos.slice(0, 4).map((video: Video) => (
-              <VideoCard key={video.id} video={video} type="live" />
-            ))}
+            {liveVideos
+              .slice(0, isExpandedLive ? liveVideos.length : 4)
+              .map((video: Video) => (
+                <VideoCard key={video.id} video={video} type="live" />
+              ))}
           </div>
-          <ShowMore isExpanded={isExpanded} onToggle={handleToggle} />
+          <ShowMore
+            isExpanded={isExpandedLive}
+            onToggle={() => setIsExpandedLive((prev) => !prev)}
+          />{" "}
         </div>
       </section>
 
@@ -126,10 +145,17 @@ export default function Home() {
             placeholder="Toutes les Tendances"
           />
           <div className="grid  gap-6">
-            {videos.slice(10, 13).map((video) => (
-              <VideoCard key={video.id} video={video} type="trend" />
-            ))}
+            {trendingVideos
+              .slice(0, isExpandedTrending ? trendingVideos.length : 4)
+              .map((video) => (
+                <VideoCard key={video.id} video={video} type="trend" />
+              ))}
           </div>
+
+          <ShowMore
+            isExpanded={isExpandedTrending}
+            onToggle={() => setIsExpandedTrending((prev) => !prev)}
+          />
         </div>
       </section>
 
@@ -146,7 +172,10 @@ export default function Home() {
               <VideoCard key={video.id} video={video} type="normal" />
             ))}
           </div>
-          <ShowMore isExpanded={isExpanded} onToggle={handleToggle} />
+          <ShowMore
+            isExpanded={isExpandedNews}
+            onToggle={() => setIsExpandedNews((prev) => !prev)}
+          />
         </div>
       </section>
     </main>
