@@ -4,6 +4,7 @@ import SocialLoginButtons from "@/components/ui/SocialLoginButtons";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const { register } = useAuth();
@@ -12,13 +13,18 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     try {
-      await register({ email, name, password });
+      await register({ email, name, password, isActive: true });
+      setEmail("");
+      setPassword("");
+      setPassword("");
+      router.push("/login");
     } catch (err) {
       setError(`Échec de l'inscription. Veuillez réessayer.: ${err}`);
     } finally {

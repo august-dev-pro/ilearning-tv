@@ -67,6 +67,24 @@ form .textarea {
   white-space: normal;
   color: #0a1b3b;
 }
+/* Swiper pagination dots customisation */
+.custom-swiper .swiper-pagination-bullet {
+  background-color: white;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px !important;
+  border-radius: 9999px;
+}
+
+.custom-swiper .swiper-pagination-bullet-active {
+  background-color: #0a1b3b;
+  border: 1px solid #ffffff86;
+
+  opacity: 1;
+  width: 24px;
+}
 
 .section_header .sec_link {
   font-size: 0.775rem;

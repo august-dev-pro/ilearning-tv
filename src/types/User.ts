@@ -10,4 +10,5 @@ export interface User {
   dateInscription: string;
   videosPubliees: number;
   pays: string;
+  role: string;
 }

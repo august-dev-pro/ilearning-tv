@@ -17,6 +17,12 @@ export interface JwtPayload {
   nomDeChaine?: string;
   // Ajoute d'autres champs si besoin
 }
+export interface UserInformations {
+  email: string;
+  name: string;
+  role: string;
+  avatarUrl: string;
+}
 
 export async function login(
   email: string,
@@ -51,25 +57,50 @@ export async function logout(refreshToken: string): Promise<void> {
     throw new Error("Erreur inconnue lors de la deconnexion");
   }
 }
+export async function getUserInformations(
+  accessToken: string
+): Promise<UserInformations> {
+  try {
+    const response = await fetch(`${PROD_API_AUTH_URL}/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Erreur API: ${response.status} - ${response.statusText}`
+      );
+    }
+
+    const json = await response.json();
+    return json.data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+    throw new Error(
+      "Erreur inconnue lors de la récupération des infos utilisateur"
+    );
+  }
+}
 
 export async function register(data: {
   email: string;
   name: string;
   password: string;
-}): Promise<User | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  isActive: boolean;
+}): Promise<string | null> {
+  const res = await fetch(`${PROD_API_AUTH_URL}/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
 
-  return {
-    id: `${data.name}_${data.password}`,
-    nom: data.name.split(" ")[1] || "Nom",
-    prenom: data.name.split(" ")[0] || "Prénom",
-    nomDeChaine: `${data.name}TV`,
-    nombreDAbonnes: 0,
-    email: data.email,
-    avatarUrl: "https://example.com/avatar.jpg",
-    description: "Nouvel utilisateur",
-    dateInscription: new Date().toISOString(),
-    videosPubliees: 0,
-    pays: "France",
-  };
+  if (!res.ok) throw new Error("Erreur de connexion");
+  const json = await res.json();
+
+  return json.data;
 }

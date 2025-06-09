@@ -5,8 +5,8 @@ const HomeSkeleton = () => {
     <main className=" section  ">
       <div className="container px-4 sm:px-0 space-y-10 sm:space-y-12">
         {/* Skeleton pour la bannière */}
-        <section className=" animate-pulse mt-10">
-          <div className="h-64 bg-gray-300 rounded-lg"></div>
+        <section className=" animate-pulse">
+          <div className="h-[276px] bg-gray-300 rounded-lg"></div>
         </section>
 
         {/* Skeleton pour les vidéos recommandées */}

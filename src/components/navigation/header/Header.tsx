@@ -18,6 +18,8 @@ import { usePathname } from "next/navigation";
 import SearchModal from "@/components/ui/SearchModal";
 import { useAuth } from "@/contexts/AuthContext";
 import { FaUserCircle } from "react-icons/fa";
+import { useCategories } from "@/contexts/CategoryContext";
+import UserMenu from "./UserMenu";
 
 export default function Header() {
   const [isScroll, setIsScroll] = useState(false);
@@ -27,15 +29,16 @@ export default function Header() {
 
   const path = usePathname();
   const { user, logout } = useAuth();
+  const { categories } = useCategories();
   const navLinks = [
     { label: "Accueil", href: "/", icon: <FiHome /> },
     {
       label: "Catégories",
-      href: "/categories",
+      // href: "/categories",
       icon: <FiList />,
       isSubMenu: true,
       isBold: true,
-      subLinks: [
+      subLinks: categories /* [
         {
           label: "Mathematiques",
           href: "/categories/mathématiques",
@@ -44,7 +47,7 @@ export default function Header() {
         { label: "Science", href: "/categories/science", videos: 3412 },
         { label: "Temps anciens", href: "/categories/histoire", videos: 1204 },
         { label: "Histoire", href: "/categories/histoire", videos: 132 },
-      ],
+      ] */,
     },
     { label: "En direct", href: "/live", icon: <FiVideo />, badge: false },
     {
@@ -99,7 +102,7 @@ export default function Header() {
                 {navLinks.slice(0, 3).map((link, index) => (
                   <div key={index} className="relative group">
                     <Link
-                      href={link.href}
+                      href={link.href || "#"}
                       className={`cursor-pointer group flex items-center gap-1 text-white ${
                         link.isBold ? "font-semibold" : ""
                       }`}
@@ -135,18 +138,18 @@ export default function Header() {
                                 className="flex cursor-pointer rounded justify-between px-4 py-2 items-center w-[350px] overflow-hidden hover:bg-slate-200 transition-all duration-200"
                               >
                                 <Link
-                                  href={sub.href}
+                                  href={`/categories/${sub.name}`}
                                   className="block cursor-pointer whitespace-nowrap"
                                 >
-                                  {sub.label}
+                                  {sub.name}
                                 </Link>
 
                                 <span className="w-max text-[11px]">
-                                  {sub.videos} videos
+                                  {sub.videos.length} videos
                                 </span>
                               </div>
                             );
-                          } else {
+                          } /* else {
                             return (
                               <Link
                                 key={index}
@@ -156,7 +159,7 @@ export default function Header() {
                                 {sub.label}
                               </Link>
                             );
-                          }
+                          } */
                         })}
                       </div>
                     )}
@@ -168,7 +171,7 @@ export default function Header() {
                   onClick={() => setIsSearchModalOpen(true)}
                 />
               </nav>
-              {user ? (
+              {/*  {user ? (
                 <button
                   className="flex cursor-pointer items-center p-[6px] rounded-full border border-blue-400 bg-white text-[#0a1b3b] hover:bg-blue-50 transition"
                   title="Mon compte"
@@ -185,7 +188,8 @@ export default function Header() {
                 >
                   Se connecter
                 </Link>
-              )}
+              )} */}
+              <UserMenu />
             </div>
 
             {/* Mobile Hamburger */}
@@ -246,14 +250,13 @@ export default function Header() {
 
               {/* Drawer */}
               <motion.div
-                className="fixed right-0 top-0 h-full w-72 bg-[#0a1b3b] text-white shadow-lg z-[100] p-6 flex flex-col"
+                className="fixed right-0 top-0 h-full w-72 bg-[#0a1b3b] text-white shadow-lg z-[100] pt-2 px-6 flex flex-col"
                 initial={{ x: "100%" }}
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
                 transition={{ type: "tween" }}
               >
-                <div className="flex justify-between items-center mb-8">
-                  <span className="text-xl font-bold">Menu</span>
+                <div className="flex  justify-end mb-4">
                   <button
                     onClick={() => {
                       setIsMenuOpen(false);
@@ -265,6 +268,18 @@ export default function Header() {
                     <FiX />
                   </button>
                 </div>
+                {user && (
+                  <div className="mb-4 flex items-center gap-3">
+                    <img
+                      src={user.avatarUrl || "images/stephan-wahl.jpeg"}
+                      alt="Avatar"
+                      className="w-10 h-10 rounded-full"
+                    />
+                    <span className="text-white text-sm">
+                      {user.email || "Profil"}
+                    </span>
+                  </div>
+                )}
                 <div className="flex flex-col space-y-4">
                   {navLinks.map((link, index) => (
                     <div key={index}>
@@ -320,24 +335,36 @@ export default function Header() {
                           {link.subLinks?.map((sub, index) => (
                             <Link
                               key={index}
-                              href={sub.href}
+                              href={`/categories/${sub.name}`}
                               className="text-sm hover:underline"
                               onClick={() => setIsMenuOpen(false)}
                             >
-                              {sub.label}
+                              {sub.name}
                             </Link>
                           ))}
                         </motion.div>
                       )}
                     </div>
                   ))}
-                  <Link
-                    href="/login"
-                    className="mt-4 bg-white text-[#0a1b3b] font-semibold px-4 py-2 rounded-full text-center hover:bg-gray-200 transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Se connecter
-                  </Link>
+                  {user ? (
+                    <button
+                      className="mt-4 bg-white text-[#0a1b3b] font-semibold px-4 py-2 rounded-full text-center hover:bg-gray-200 transition-colors"
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        logout();
+                      }}
+                    >
+                      Se deconnecter
+                    </button>
+                  ) : (
+                    <Link
+                      href="/login"
+                      className="mt-4 bg-white text-[#0a1b3b] font-semibold px-4 py-2 rounded-full text-center hover:bg-gray-200 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Se connecter
+                    </Link>
+                  )}
                 </div>
               </motion.div>
             </>

@@ -1,5 +1,7 @@
 "use client";
 import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 import FeaturedVideoBanner from "@/components/videos/FeaturedVideoBanner";
 import VideoCard from "@/components/videos/VideoCard";
 import { useState } from "react";
@@ -48,9 +50,13 @@ export default function Home() {
             loop
             autoplay={{ delay: 8000, disableOnInteraction: false }}
             pagination={{ clickable: true }}
-            navigation
-            modules={[Autoplay, Pagination, Navigation]}
-            style={{ borderRadius: 12, overflow: "hidden" }}
+            modules={[Autoplay, Pagination]}
+            style={{
+              borderRadius: 12,
+              overflow: "hidden",
+              position: "relative",
+            }}
+            className="custom-swiper"
           >
             {videos.slice(10, 14).map((video) => (
               <SwiperSlide key={video.id}>

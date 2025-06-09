@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import {
   AuthTokens,
+  getUserInformations,
   JwtPayload,
   login as loginApi,
   logout as logoutApi,
@@ -18,6 +19,7 @@ interface AuthContextProps {
     email: string;
     name: string;
     password: string;
+    isActive: boolean;
   }) => Promise<void>;
   authError: string | null;
   authTokens: AuthTokens | null;
@@ -32,33 +34,44 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Charger le token au démarrage
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      setAuthTokens({
-        accessToken,
-        refreshToken: localStorage.getItem("refreshToken") || "",
-      });
-      try {
-        const decoded = jwtDecode<JwtPayload>(accessToken);
-        console.log("decoded token data: ", decoded);
+    const loadUserFromToken = async () => {
+      const accessToken = localStorage.getItem("accessToken");
 
-        setUser({
-          id: decoded.sub,
-          email: decoded.email,
-          nom: decoded.nom || "",
-          prenom: decoded.prenom || "",
-          nomDeChaine: decoded.nomDeChaine || "",
-          nombreDAbonnes: 0,
-          avatarUrl: "",
-          description: "",
-          dateInscription: "",
-          videosPubliees: 0,
-          pays: "",
+      if (accessToken) {
+        setAuthTokens({
+          accessToken,
+          refreshToken: localStorage.getItem("refreshToken") || "",
         });
-      } catch {
-        setUser(null);
+
+        try {
+          const decoded = jwtDecode<JwtPayload>(accessToken);
+          const user = await getUserInformations(accessToken);
+
+          setUser({
+            id: decoded.sub,
+            email: user.email,
+            nom: user.name,
+            prenom: decoded.prenom || "",
+            nomDeChaine: decoded.nomDeChaine || "",
+            nombreDAbonnes: 0,
+            avatarUrl: user.avatarUrl || "",
+            description: "",
+            dateInscription: "",
+            videosPubliees: 0,
+            pays: "",
+            role: user.role,
+          });
+        } catch (err) {
+          console.error(
+            "Erreur lors du décodage ou du chargement de l'utilisateur :",
+            err
+          );
+          setUser(null);
+        }
       }
-    }
+    };
+
+    loadUserFromToken(); // Appel explicite
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -69,18 +82,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.setItem("accessToken", tokens.accessToken);
       localStorage.setItem("refreshToken", tokens.refreshToken);
       const decoded = jwtDecode<JwtPayload>(tokens.accessToken);
+
+      const user = await getUserInformations(tokens.accessToken);
+
       setUser({
         id: decoded.sub,
-        email: decoded.email,
-        nom: decoded.nom || "",
+        email: user.email,
+        nom: user.name,
         prenom: decoded.prenom || "",
         nomDeChaine: decoded.nomDeChaine || "",
         nombreDAbonnes: 0,
-        avatarUrl: "",
+        avatarUrl: user.avatarUrl || "",
         description: "",
         dateInscription: "",
         videosPubliees: 0,
         pays: "",
+        role: user.role,
       });
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -108,6 +125,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     email: string;
     name: string;
     password: string;
+    isActive: boolean;
   }) => {
     try {
       await registerApi(data);
