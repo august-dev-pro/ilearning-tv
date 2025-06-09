@@ -1,5 +1,4 @@
 import { API_URL } from "@/lib/api";
-import { User } from "@/types/User";
 
 const PROD_API_AUTH_URL = `${API_URL}/auth`;
 // const API_URL = "http://127.0.0.1:3900/auth";

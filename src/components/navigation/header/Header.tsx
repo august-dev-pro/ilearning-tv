@@ -17,7 +17,6 @@ import { GoTriangleUp } from "react-icons/go";
 import { usePathname } from "next/navigation";
 import SearchModal from "@/components/ui/SearchModal";
 import { useAuth } from "@/contexts/AuthContext";
-import { FaUserCircle } from "react-icons/fa";
 import { useCategories } from "@/contexts/CategoryContext";
 import UserMenu from "./UserMenu";
 

@@ -1,11 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import {
-  FaUserCircle,
-  FaCog,
-  FaSignOutAlt,
-  FaPaintBrush,
-} from "react-icons/fa";
-import { MdFavorite, MdOutlineSpaceDashboard } from "react-icons/md";
+import { FaCog, FaSignOutAlt } from "react-icons/fa";
+import { MdFavorite } from "react-icons/md";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { RiWechatChannelsFill } from "react-icons/ri";
